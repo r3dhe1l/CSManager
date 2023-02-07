@@ -35,6 +35,6 @@ namespace r3d
 
 		std::string determineInternationalTeamRegion();
 
-		std::string getRandomCreated();
+		std::string createRandomFounding();
 	};
 }

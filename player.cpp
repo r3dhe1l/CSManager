@@ -4,6 +4,7 @@
 #include "D:/a_cursos/projetos_CPP/CSManager/thirdParty/randomLibrary/random.hpp"
 #include "D:/a_cursos/projetos_CPP/CSManager/thirdParty/nameGenerator/dasmig/namegen.hpp"
 #include "D:/a_cursos/projetos_CPP/CSManager/thirdParty/nicknameGenerator/dasmig/nicknamegen.hpp"
+#include "countryChoiceFunctions.hpp"
 #include "player.hpp"
 
 namespace r3d
@@ -15,31 +16,16 @@ namespace r3d
 		this->_skillLevel = 0;
 	}
 
-	player::player(std::wstring name, std::wstring nickname, std::string nationality, std::string born, std::string roleCT, std::string roleTR, char gender, std::uint8_t skillLevel, std::string currentDate)
-	{
-		this->_name = name;
-		this->_nickname = nickname;
-		this->_nationality = nationality;
-		this->_born = born;
-		this->_roleCT = roleCT;
-		this->_roleTR = roleTR;
-		this->_gender = gender;
-		this->_skillLevel = skillLevel;
-		this->_age = setAge(currentDate);
-	}
+	player::player(std::wstring name, std::wstring nickname, std::string nationality, std::string born, std::string roleCT, std::string roleTR, char gender,
+		std::uint8_t skillLevel, std::string currentDate)
+		: _name(name), _nickname(nickname), _nationality(nationality), _born(born), _roleCT(roleCT), _roleTR(roleTR), _gender(gender), _age(setAge(currentDate)),
+		_skillLevel(skillLevel)
+	{}
 
-	player::player(std::string country)
-	{
-		this->_name = L"Player`s Name";
-		this->_nickname = L"Player`s Nickname";
-		this->_nationality = country;
-		this->_born = getRandomBorn();
-		this->_roleCT = getRandomRoleCT();
-		this->_roleTR = getRandomRoleTR();
-		this->_gender = 'm';
-		this->_skillLevel = getRandomSkillLevel();
-		this->_age = setAge("31/01/2023");
-	}
+	player::player(std::string& country, char gender)
+		: _name(createRandomName(country, gender)), _nickname(createRandomNick(this->_name)), _nationality(country), _born(createRandomBorn()), _roleCT(chooseRandomRoleCT()),
+		_roleTR(chooseRandomRoleTR()), _gender(gender), _age(setAge("07/02/2023")), _skillLevel(createRandomSkillLevel())
+	{}
 
 	std::uint8_t player::setAge(std::string currentDate)
 	{
@@ -77,7 +63,31 @@ namespace r3d
 			this->_gender << "\nCom skill level de " << this->_skillLevel << "\nE tem " << this->_age << " anos\n";
 	}
 
-	std::string player::getRandomBorn()
+	std::wstring player::createRandomName(std::string& country, char& gender)
+	{
+		int random = effolkronium::random_thread_local::get<int>(1, 30);
+
+		switch (random)
+		{
+		case 10:
+			return dasmig::ng::instance().get_name(dasmig::ng::to_gender(std::to_wstring(gender)), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_name().append_surname();
+		case 20:
+			return dasmig::ng::instance().get_name(dasmig::ng::to_gender(std::to_wstring(gender)), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_surname().append_surname();
+		case 30:
+			return dasmig::ng::instance().get_name(dasmig::ng::to_gender(std::to_wstring(gender)), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_name().append_surname().append_surname();
+		default:
+			break;
+		}
+
+		return dasmig::ng::instance().get_name(dasmig::ng::to_gender(std::to_wstring(gender)), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_surname();
+	}
+
+	std::wstring player::createRandomNick(std::wstring& name)
+	{
+		return dasmig::nng::instance().get_nickname(name);
+	}
+
+	std::string player::createRandomBorn()
 	{
 		int year, month, day = 0;
 		year = effolkronium::random_thread_local::get<int>(1990, 2006);
@@ -120,21 +130,21 @@ namespace r3d
 		return dayString + "/" + monthString + "/" + std::to_string(year);
 	}
 
-	std::string player::getRandomRoleCT()
+	std::string player::chooseRandomRoleCT()
 	{
 		std::string roles[] = { "mid", "rotator", "anchor A", "anchor B", "joker" };
 
 		return roles[effolkronium::random_thread_local::get<int>(0, 4)];
 	}
 
-	std::string player::getRandomRoleTR()
+	std::string player::chooseRandomRoleTR()
 	{
 		std::string roles[] = { "entry", "support", "lurker", "trader", "joker" };
 
 		return roles[effolkronium::random_thread_local::get<int>(0, 4)];
 	}
 
-	std::uint8_t player::getRandomSkillLevel()
+	std::uint8_t player::createRandomSkillLevel()
 	{
 		return effolkronium::random_thread_local::get<int>(1, 100);
 	}

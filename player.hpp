@@ -11,7 +11,7 @@ namespace r3d
 
 		player(std::wstring name, std::wstring nickname, std::string nationality, std::string born, std::string roleCT, std::string roleTR, char gender, std::uint8_t skillLevel, std::string currentDate);
 
-		player(std::string country);
+		player(std::string& country, char gender = 'm');
 
 		std::uint8_t setAge(std::string currentDate);
 
@@ -30,12 +30,16 @@ namespace r3d
 		std::uint8_t _age;
 		std::uint8_t _skillLevel;
 
-		std::string getRandomBorn();
+		std::wstring createRandomName(std::string& country, char& gender);
 
-		std::string getRandomRoleCT();
+		std::wstring createRandomNick(std::wstring& name);
 
-		std::string getRandomRoleTR();
+		std::string createRandomBorn();
 
-		std::uint8_t getRandomSkillLevel();
+		std::string chooseRandomRoleCT();
+
+		std::string chooseRandomRoleTR();
+
+		std::uint8_t createRandomSkillLevel();
 	};
 }

@@ -16,31 +16,21 @@ namespace r3d
 	}
 
 	team::team(std::wstring name, std::string country, std::string region, std::string creationDate, std::vector <r3d::player> players, r3d::coach coach)
-	{
-		this->_name = name;
-		this->_country = country;
-		this->_region = region;
-		this->_creationDate = creationDate;
-		this->_numberPlayers = this->_playersVector.size();
-		this->_playersVector = players;
-		this->_coach = coach;
-	}
+		: _name(name), _country(country), _region(region), _creationDate(creationDate), _numberPlayers(this->_playersVector.size()), _playersVector(players), _coach(coach)
+	{}
 
 	team::team(std::vector <r3d::player> players)
-	{
-		this->_name = L"Team's Name";
-		this->_playersVector = players;
-		this->_numberPlayers = this->_playersVector.size();
-		this->_creationDate = getRandomCreated();
-		this->_country = playersGetCountry();
-		this->_region = countryGetRegion();
-	}
+		: _name(L"Team's Name"), _playersVector(players), _numberPlayers(this->_playersVector.size()), _creationDate(createRandomFounding()), _country(playersGetCountry()),
+		_region(countryGetRegion())
+	{}
 
 	void team::addPlayerToTeam(r3d::player player)
 	{
 		if (this->_numberPlayers < 5)
 		{
 			this->_playersVector.push_back(player);
+			this->_country = playersGetCountry();
+			this->_region = countryGetRegion();
 		}
 	}
 
@@ -55,7 +45,8 @@ namespace r3d
 	std::string team::playersGetCountry()
 	{
 		std::vector <std::string> playersNationalityVector;
-		std::int64_t index, numCountries;
+		int index;
+		int numCountries;
 
 		for (int i = 0; i < this->_numberPlayers; i++)
 		{
@@ -120,7 +111,7 @@ namespace r3d
 		return "Europe";
 	}
 
-	std::string team::getRandomCreated()
+	std::string team::createRandomFounding()
 	{
 		int year, month, day = 0;
 		year = effolkronium::random_thread_local::get<int>(2013, 2022);

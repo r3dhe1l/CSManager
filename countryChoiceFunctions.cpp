@@ -64,7 +64,7 @@ namespace r3d
 
 		for (int i = 0; i <= (numTeams * 8 - 8); i += 8)
 		{
-			int randomNumber = effolkronium::random_thread_local::get<size_t>(0, countriesTeams.size() - 1);
+			std::size_t randomNumber = effolkronium::random_thread_local::get<std::size_t>(0, countriesTeams.size() - 1);
 			listOfTeamsPlayers.at(i) = "Team number " + std::to_string(x++);
 			listOfTeamsPlayers.at(i + 1) = "Country Team " + countriesTeams.at(randomNumber);
 			countriesTeams.erase(countriesTeams.begin() + randomNumber);
@@ -74,7 +74,7 @@ namespace r3d
 		{
 			if (listOfTeamsPlayers.at(i) == "")
 			{
-				int randomNumber = effolkronium::random_thread_local::get<size_t>(0, countriesPlayers.size() - 1);
+				std::size_t randomNumber = effolkronium::random_thread_local::get<std::size_t>(0, countriesPlayers.size() - 1);
 				listOfTeamsPlayers.at(i) = "Country Player " + countriesPlayers.at(randomNumber);
 				countriesPlayers.erase(countriesPlayers.begin() + randomNumber);
 			}
@@ -91,6 +91,16 @@ namespace r3d
 		}
 
 		return &availableCountries.at(availableCountries.size() - 1);
+	}
+
+	const std::wstring* countryGetCode(const std::string& country)
+	{
+		if (countryToCode.contains(country))
+		{
+			return &countryToCode.at(country);
+		}
+
+		return &countryToCode.at("International"); //return Country not found.
 	}
 
 	const std::string* countryGetRegion(const std::string& country)

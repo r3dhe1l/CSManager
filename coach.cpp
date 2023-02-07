@@ -4,7 +4,9 @@
 #include "D:/a_cursos/projetos_CPP/CSManager/thirdParty/randomLibrary/random.hpp"
 #include "D:/a_cursos/projetos_CPP/CSManager/thirdParty/nameGenerator/dasmig/namegen.hpp"
 #include "D:/a_cursos/projetos_CPP/CSManager/thirdParty/nicknameGenerator/dasmig/nicknamegen.hpp"
+#include "countryChoiceFunctions.hpp"
 #include "coach.hpp"
+
 
 namespace r3d
 {
@@ -16,26 +18,13 @@ namespace r3d
 	}
 
 	coach::coach(std::wstring name, std::wstring nickname, std::string nationality, std::string born, char gender, std::uint8_t rating, std::string currentDate)
-	{
-		this->_name = name;
-		this->_nickname = nickname;
-		this->_nationality = nationality;
-		this->_born = born;
-		this->_gender = gender;
-		this->_rating = rating;
-		this->_age = setAge(currentDate);
-	}
+		: _name(name), _nickname(nickname), _nationality(nationality), _born(born), _gender(gender), _age(setAge(currentDate)), _rating(rating)
+	{}
 
-	coach::coach(std::string country)
-	{
-		this->_name = L"Coach`s Name";
-		this->_nickname = L"Coach`s Nickname";
-		this->_nationality = country;
-		this->_born = getRandomBorn();
-		this->_gender = 'm';
-		this->_rating = getRandomRating();
-		this->_age = setAge("31/01/2023");
-	}
+	coach::coach(std::string& country, char gender)
+		: _name(createRandomName(country, gender)), _nickname(createRandomNick(this->_name)), _nationality(country), _born(createRandomBorn()), _gender(gender),
+		_age(setAge("07/02/2023")), _rating(createRandomRating())
+	{}
 
 	std::uint8_t coach::setAge(std::string currentDate)
 	{
@@ -72,7 +61,31 @@ namespace r3d
 			"\nNasceu em " << this->_born.c_str() << "\nSexo " << this->_gender << "\nCom rating de " << this->_rating << "\nE tem " << this->_age << " anos\n";
 	}
 
-	std::string coach::getRandomBorn()
+	std::wstring coach::createRandomName(std::string& country, char& gender)
+	{
+		int random = effolkronium::random_thread_local::get<int>(1, 30);
+
+		switch (random)
+		{
+		case 10:
+			return dasmig::ng::instance().get_name(dasmig::ng::to_gender(std::to_wstring(gender)), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_name().append_surname();
+		case 20:
+			return dasmig::ng::instance().get_name(dasmig::ng::to_gender(std::to_wstring(gender)), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_surname().append_surname();
+		case 30:
+			return dasmig::ng::instance().get_name(dasmig::ng::to_gender(std::to_wstring(gender)), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_name().append_surname().append_surname();
+		default:
+			break;
+		}
+
+		return dasmig::ng::instance().get_name(dasmig::ng::to_gender(std::to_wstring(gender)), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_surname();
+	}
+
+	std::wstring coach::createRandomNick(std::wstring& name)
+	{
+		return dasmig::nng::instance().get_nickname(name);
+	}
+
+	std::string coach::createRandomBorn()
 	{
 		int year, month, day = 0;
 		year = effolkronium::random_thread_local::get<int>(1980, 2000);
@@ -115,7 +128,7 @@ namespace r3d
 		return dayString + "/" + monthString + "/" + std::to_string(year);
 	}
 
-	std::uint8_t coach::getRandomRating()
+	std::uint8_t coach::createRandomRating()
 	{
 		return effolkronium::random_thread_local::get<int>(1, 100);
 	}
