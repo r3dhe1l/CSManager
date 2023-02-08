@@ -20,7 +20,7 @@ namespace r3d
 			do
 			{
 				randomCountry = availableCountries.at(effolkronium::random_thread_local::get<int>(0, 18));
-				countriesLimitVector = std::round(numCountries * teamsRegionalDistribution.at(randomCountry));
+				countriesLimitVector = std::round(numCountries * teamsCountryDistribution.at(randomCountry));
 				numberCountriesVector = std::count(teamsCountriesVector.begin(), teamsCountriesVector.end(), randomCountry);
 			
 			} while (countriesLimitVector <= numberCountriesVector);
@@ -42,7 +42,7 @@ namespace r3d
 			do
 			{
 				randomCountry = availableCountries.at(effolkronium::random_thread_local::get<std::size_t>(1, (availableCountries.size() - 2)));
-				countriesLimitVector = std::round(numCountries * playersRegionalDistribution.at(randomCountry));
+				countriesLimitVector = std::round(numCountries * playersCountryDistribution.at(randomCountry));
 				numberCountriesVector = std::count(playersCountriesVector.begin(), playersCountriesVector.end(), randomCountry);
 
 			} while (countriesLimitVector <= numberCountriesVector);
@@ -50,6 +50,70 @@ namespace r3d
 			playersCountriesVector.at(i) = randomCountry;
 		}
 		return playersCountriesVector;
+	}
+
+	std::vector <std::string> playersCountriesSortBySkillLevel(const std::size_t numTeams)
+	{
+		std::size_t numPlayers = numTeams * 6;
+		std::vector <std::string> sortedPlayerCountriesVector{ numPlayers };
+		std::vector <std::string> avaibleCountriesForTier;
+		float countriesLimitVector = 0;
+		std::int64_t numberCountriesVector = 0;
+		std::string randomCountry = "";
+		int nextIndex = 0;
+
+		std::begin(sortedPlayerCountriesVector);
+		std::begin(sortedPlayerCountriesVector) + numPlayers * 0.00185;
+		std::begin(sortedPlayerCountriesVector) + numPlayers * 0.00278;
+
+		//(std::begin(sortedPlayerCountriesVector), std::begin(sortedPlayerCountriesVector) + numPlayers * 0.00185, { "Sweden", "Sweden", "France", "France", "Ukraine", "Ukraine", "Brazil", "Brazil", "Denmark", "Bosnia", "Slovakia" })
+
+
+		for (int i = 0; i < std::round(numPlayers*0.00185); i++) //for 1080 players or 180 teams, define 2 highest overall
+		{
+			do
+			{				
+				avaibleCountriesForTier = { "Sweden", "Sweden", "France", "France", "Ukraine", "Ukraine", "Brazil", "Brazil", "Denmark", "Bosnia", "Slovakia" };
+				randomCountry = avaibleCountriesForTier.at(effolkronium::random_thread_local::get<std::size_t>(0, avaibleCountriesForTier.size()-1));
+				countriesLimitVector = std::round(numPlayers * playersCountryDistribution.at(randomCountry));
+				numberCountriesVector = std::count(sortedPlayerCountriesVector.begin(), sortedPlayerCountriesVector.end(), randomCountry);
+
+			} while (countriesLimitVector <= numberCountriesVector);
+
+			sortedPlayerCountriesVector.at(i) = randomCountry;
+			nextIndex = i+1;
+		}
+
+		for (int i = nextIndex; i < std::round(numPlayers * 0.00278); i++)
+		{
+			do
+			{
+				avaibleCountriesForTier = { "Russia", "Russia", "Russia", "Denmark", "Denmark", "Denmark", "Bosnia", "Bosnia", "Poland", "Poland", "Sweden", "France", "Ukraine",
+											"Brazil", "Norway", "Unitade States" };
+				randomCountry = avaibleCountriesForTier.at(effolkronium::random_thread_local::get<std::size_t>(0, avaibleCountriesForTier.size()-1));
+				countriesLimitVector = std::round(numPlayers * playersCountryDistribution.at(randomCountry));
+				numberCountriesVector = std::count(sortedPlayerCountriesVector.begin(), sortedPlayerCountriesVector.end(), randomCountry);
+
+			} while (countriesLimitVector <= numberCountriesVector);
+
+			sortedPlayerCountriesVector.at(i) = randomCountry;
+			nextIndex = i + 1;
+		}
+
+		for (int i = nextIndex; i < std::round(numPlayers * 0.00278); i++)
+		{
+			do
+			{
+				avaibleCountriesForTier = { "Sweden", "Sweden", "France", "France", "Ukraine", "Ukraine", "Brazil", "Brazil", "Denmark", "Bosnia", "Slovakia" };
+				randomCountry = avaibleCountriesForTier.at(effolkronium::random_thread_local::get<std::size_t>(0, 10));
+				countriesLimitVector = std::round(numPlayers * playersCountryDistribution.at(randomCountry));
+				numberCountriesVector = std::count(sortedPlayerCountriesVector.begin(), sortedPlayerCountriesVector.end(), randomCountry);
+
+			} while (countriesLimitVector <= numberCountriesVector);
+
+			sortedPlayerCountriesVector.at(i) = randomCountry;
+			nextIndex = i + 1;
+		}
 	}
 
 	std::vector <std::string> countriesTeamsPlayers(const std::size_t numTeams)

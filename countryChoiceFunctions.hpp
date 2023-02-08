@@ -9,13 +9,15 @@ namespace r3d
 
 	std::vector <std::string> playersCreateCountriesVector(const std::size_t numCountries);
 
+	std::vector <std::string> playersCountriesSortBySkillLevel(const std::size_t numTeams);
+
+	std::vector <std::string> countriesTeamsPlayers(const std::size_t numTeams);
+
 	const std::string* countryGetCulture(const std::string& country);
 
 	const std::wstring* countryGetCode(const std::string& country);
 
 	const std::string* countryGetRegion(const std::string& country);
-
-	std::vector <std::string> countriesTeamsPlayers(const std::size_t numTeams);
 
 	static inline const std::vector <std::string> availableCountries = {
 		//players' countries in hltv top 30 world ranking
@@ -128,7 +130,7 @@ namespace r3d
 		{availableCountries.at(34), availableCultures.at(16)},
 		{availableCountries.at(35), availableCultures.at(5)},//Romania - bulgarian
 		{availableCountries.at(36), availableCultures.at(5)},//Serbia - bulgarian
-		{availableCountries.at(37), availableCultures.at(8)},//Slovakia - czech
+		{availableCountries.at(37), availableCultures.at(17)},//Slovakia - polish (czech)
 		{availableCountries.at(38), availableCultures.at(0)},//South Africa - american
 		{availableCountries.at(39), availableCultures.at(20)},
 		{availableCountries.at(40), availableCultures.at(12)},//Switzerland - german
@@ -160,7 +162,7 @@ namespace r3d
 		{availableCountries.at(22), L"ca"},
 		{availableCountries.at(23), L"ar"},// Chile - argentinian
 		{availableCountries.at(24), L"ru"},//Estonia - russian
-		{availableCountries.at(25), L"pl"},//Hungary - polish
+		{availableCountries.at(25), L"pl"},//Hungary - polish (czech)
 		{availableCountries.at(26), L"ru"},//Israel - russian
 		{availableCountries.at(27), L"kz"},
 		{availableCountries.at(28), L"tr"},//Kosovo - turkish
@@ -222,7 +224,7 @@ namespace r3d
 		{availableCountries.at(40), "Europe"},//Switzerland - german
 		{availableCountries.at(41), "Americas"}};//Uruguay - argentinian
 
-	static inline const std::map <std::string, float> teamsRegionalDistribution{
+	static inline const std::map <std::string, float> teamsCountryDistribution{
 		{availableCountries.at(0), 0.082},
 		{availableCountries.at(1), 0.04},
 		{availableCountries.at(2), 0.064},
@@ -243,7 +245,7 @@ namespace r3d
 		{availableCountries.at(17), 0.04},
 		{availableCountries.at(18), 0.114} };
 
-	static inline const std::map <std::string, float> playersRegionalDistribution{
+	static inline const std::map <std::string, float> playersCountryDistribution{
 		{availableCountries.at(1), 0.0353},
 		{availableCountries.at(2), 0.0543},
 		{availableCountries.at(3), 0.1635},
