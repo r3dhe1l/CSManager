@@ -17,7 +17,7 @@ namespace r3d
 	}
 
 	player::player(std::wstring name, std::wstring nickname, std::string nationality, std::string born, std::string roleCT, std::string roleTR, char gender,
-		std::uint8_t skillLevel, std::string currentDate)
+					std::uint8_t skillLevel, std::string currentDate)
 		: _name(name), _nickname(nickname), _nationality(nationality), _born(born), _roleCT(roleCT), _roleTR(roleTR), _gender(gender), _age(setAge(currentDate)),
 		_skillLevel(skillLevel)
 	{}
@@ -25,6 +25,11 @@ namespace r3d
 	player::player(std::string& country, char gender)
 		: _name(createRandomName(country, gender)), _nickname(createRandomNick(this->_name)), _nationality(country), _born(createRandomBorn()), _roleCT(chooseRandomRoleCT()),
 		_roleTR(chooseRandomRoleTR()), _gender(gender), _age(setAge("07/02/2023")), _skillLevel(createRandomSkillLevel())
+	{}
+
+	player::player(std::string& country, char tierLettre, char gender)
+		: _name(createRandomName(country, gender)), _nickname(createRandomNick(this->_name)), _nationality(country), _born(createRandomBorn()), _roleCT(chooseRandomRoleCT()),
+		_roleTR(chooseRandomRoleTR()), _gender(gender), _age(setAge("09/02/2023")), _skillLevel(createRandomSkillLevelByTier(tierLettre))
 	{}
 
 	std::uint8_t player::setAge(std::string currentDate)
@@ -47,7 +52,7 @@ namespace r3d
 		{
 			return currentYear - bornYear - 1;
 		}
-		
+
 		return currentYear - bornYear;
 	}
 
@@ -66,20 +71,22 @@ namespace r3d
 	std::wstring player::createRandomName(std::string& country, char& gender)
 	{
 		int random = effolkronium::random_thread_local::get<int>(1, 30);
+		std::wstring wGender;
+		wGender = gender;
 
 		switch (random)
 		{
 		case 10:
-			return dasmig::ng::instance().get_name(dasmig::ng::to_gender(std::to_wstring(gender)), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_name().append_surname();
+			return dasmig::ng::instance().get_name(dasmig::ng::to_gender(wGender), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_name().append_surname();
 		case 20:
-			return dasmig::ng::instance().get_name(dasmig::ng::to_gender(std::to_wstring(gender)), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_surname().append_surname();
+			return dasmig::ng::instance().get_name(dasmig::ng::to_gender(wGender), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_surname().append_surname();
 		case 30:
-			return dasmig::ng::instance().get_name(dasmig::ng::to_gender(std::to_wstring(gender)), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_name().append_surname().append_surname();
+			return dasmig::ng::instance().get_name(dasmig::ng::to_gender(wGender), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_name().append_surname().append_surname();
 		default:
 			break;
 		}
 
-		return dasmig::ng::instance().get_name(dasmig::ng::to_gender(std::to_wstring(gender)), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_surname();
+		return dasmig::ng::instance().get_name(dasmig::ng::to_gender(wGender), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_surname();
 	}
 
 	std::wstring player::createRandomNick(std::wstring& name)
@@ -146,6 +153,41 @@ namespace r3d
 
 	std::uint8_t player::createRandomSkillLevel()
 	{
-		return effolkronium::random_thread_local::get<int>(1, 100);
+		return effolkronium::random_thread_local::get<int>(55, 100);
+	}
+
+	std::uint8_t player::createRandomSkillLevelByTier(char tierLettre)
+	{
+		switch (tierLettre)
+		{
+		case 'A':
+			return effolkronium::random_thread_local::get<int>(95, 100);
+
+		case 'B':
+			return effolkronium::random_thread_local::get<int>(92, 96);
+
+		case 'C':
+			return effolkronium::random_thread_local::get<int>(89, 93);
+
+		case 'D':
+			return effolkronium::random_thread_local::get<int>(85, 90);
+
+		case 'E':
+			return effolkronium::random_thread_local::get<int>(82, 87);
+
+		case 'F':
+			return effolkronium::random_thread_local::get<int>(78, 84);
+
+		case 'G':
+			return effolkronium::random_thread_local::get<int>(69, 80);
+
+		case 'H':
+			return effolkronium::random_thread_local::get<int>(64, 72);
+
+		case 'I':
+			return effolkronium::random_thread_local::get<int>(55, 67);
+
+		}
+		return 0;
 	}
 }

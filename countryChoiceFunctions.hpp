@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include "player.hpp"
 
 namespace r3d
 {
@@ -9,9 +10,12 @@ namespace r3d
 
 	std::vector <std::string> playersCreateCountriesVector(const std::size_t numCountries);
 
+	std::vector <std::string> playersGetCountriesByRankingRange(std::vector <std::string> sortedPlayerCountriesVector, std::size_t beginIndex, std::size_t endIndex,
+																std::vector <std::string> countriesToDraw, std::string tierPlayer);
+
 	std::vector <std::string> playersCountriesSortBySkillLevel(const std::size_t numTeams);
 
-	std::vector <std::string> countriesTeamsPlayers(const std::size_t numTeams);
+	std::vector <r3d::player> createPlayersVector(const std::size_t numTeams);
 
 	const std::string* countryGetCulture(const std::string& country);
 
@@ -246,45 +250,45 @@ namespace r3d
 		{availableCountries.at(18), 0.114} };
 
 	static inline const std::map <std::string, float> playersCountryDistribution{
-		{availableCountries.at(1), 0.0353},
-		{availableCountries.at(2), 0.0543},
-		{availableCountries.at(3), 0.1635},
-		{availableCountries.at(4), 0.0211},
-		{availableCountries.at(5), 0.0143},
-		{availableCountries.at(6), 0.0853},
-		{availableCountries.at(7), 0.0342},
-		{availableCountries.at(8), 0.0243},
-		{availableCountries.at(9), 0.0263},
-		{availableCountries.at(10), 0.0253},
-		{availableCountries.at(11), 0.0753},
-		{availableCountries.at(12), 0.0283},
-		{availableCountries.at(13), 0.0874},
-		{availableCountries.at(14), 0.0493},
-		{availableCountries.at(15), 0.0163},
-		{availableCountries.at(16), 0.0383},
-		{availableCountries.at(17), 0.0263},
-		{availableCountries.at(18), 0.0935},
-		{availableCountries.at(19), 0.0033},
-		{availableCountries.at(20), 0.0033},
-		{availableCountries.at(21), 0.0053},
-		{availableCountries.at(22), 0.0123},
-		{availableCountries.at(23), 0.0033},
-		{availableCountries.at(24), 0.0033},
-		{availableCountries.at(25), 0.0033},
-		{availableCountries.at(26), 0.0033},
-		{availableCountries.at(27), 0.0081},
-		{availableCountries.at(28), 0.0043},
-		{availableCountries.at(29), 0.0033},
-		{availableCountries.at(30), 0.0033},
-		{availableCountries.at(31), 0.0033},
-		{availableCountries.at(32), 0.0033},
-		{availableCountries.at(33), 0.0092},
-		{availableCountries.at(34), 0.0033},
-		{availableCountries.at(35), 0.0053},
-		{availableCountries.at(36), 0.0043},
-		{availableCountries.at(37), 0.0053},
-		{availableCountries.at(38), 0.007},
-		{availableCountries.at(39), 0.0081},
-		{availableCountries.at(40), 0.0033},
-		{availableCountries.at(41), 0.0033}, };
+		{availableCountries.at(1), 0.0322},
+		{availableCountries.at(2), 0.0456},
+		{availableCountries.at(3), 0.0972},
+		{availableCountries.at(4), 0.0231},
+		{availableCountries.at(5), 0.0186},
+		{availableCountries.at(6), 0.0722},
+		{availableCountries.at(7), 0.0309},
+		{availableCountries.at(8), 0.0258},
+		{availableCountries.at(9), 0.0267},
+		{availableCountries.at(10), 0.0263},
+		{availableCountries.at(11), 0.0644},
+		{availableCountries.at(12), 0.0276},
+		{availableCountries.at(13), 0.0733},
+		{availableCountries.at(14), 0.0423},
+		{availableCountries.at(15), 0.0204},
+		{availableCountries.at(16), 0.0332},
+		{availableCountries.at(17), 0.0267},
+		{availableCountries.at(18), 0.0782},
+		{availableCountries.at(19), 0.0093},
+		{availableCountries.at(20), 0.0093},
+		{availableCountries.at(21), 0.0111},
+		{availableCountries.at(22), 0.0166},
+		{availableCountries.at(23), 0.0093},
+		{availableCountries.at(24), 0.0093},
+		{availableCountries.at(25), 0.0093},
+		{availableCountries.at(26), 0.0093},
+		{availableCountries.at(27), 0.0137},
+		{availableCountries.at(28), 0.0101},
+		{availableCountries.at(29), 0.0093},
+		{availableCountries.at(30), 0.0093},
+		{availableCountries.at(31), 0.0093},
+		{availableCountries.at(32), 0.0093},
+		{availableCountries.at(33), 0.0147},
+		{availableCountries.at(34), 0.0093},
+		{availableCountries.at(35), 0.0111},
+		{availableCountries.at(36), 0.0101},
+		{availableCountries.at(37), 0.0111},
+		{availableCountries.at(38), 0.0128},
+		{availableCountries.at(39), 0.0137},
+		{availableCountries.at(40), 0.0093},
+		{availableCountries.at(41), 0.0093}, };
 }

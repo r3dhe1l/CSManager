@@ -29,9 +29,9 @@ namespace r3d
 		std::vector<r3d::player> _playersVector;
 		r3d::coach _coach;
 
-		std::string playersGetCountry();
+		std::string playersDefineCountry();
 
-		std::string countryGetRegion();
+		std::string countryDefineRegion();
 
 		std::string determineInternationalTeamRegion();
 

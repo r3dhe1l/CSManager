@@ -64,20 +64,22 @@ namespace r3d
 	std::wstring coach::createRandomName(std::string& country, char& gender)
 	{
 		int random = effolkronium::random_thread_local::get<int>(1, 30);
+		std::wstring wGender;
+		wGender = gender;
 
 		switch (random)
 		{
 		case 10:
-			return dasmig::ng::instance().get_name(dasmig::ng::to_gender(std::to_wstring(gender)), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_name().append_surname();
+			return dasmig::ng::instance().get_name(dasmig::ng::to_gender(wGender), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_name().append_surname();
 		case 20:
-			return dasmig::ng::instance().get_name(dasmig::ng::to_gender(std::to_wstring(gender)), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_surname().append_surname();
+			return dasmig::ng::instance().get_name(dasmig::ng::to_gender(wGender), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_surname().append_surname();
 		case 30:
-			return dasmig::ng::instance().get_name(dasmig::ng::to_gender(std::to_wstring(gender)), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_name().append_surname().append_surname();
+			return dasmig::ng::instance().get_name(dasmig::ng::to_gender(wGender), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_name().append_surname().append_surname();
 		default:
 			break;
 		}
 
-		return dasmig::ng::instance().get_name(dasmig::ng::to_gender(std::to_wstring(gender)), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_surname();
+		return dasmig::ng::instance().get_name(dasmig::ng::to_gender(wGender), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_surname();
 	}
 
 	std::wstring coach::createRandomNick(std::wstring& name)

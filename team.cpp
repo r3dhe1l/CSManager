@@ -20,8 +20,8 @@ namespace r3d
 	{}
 
 	team::team(std::vector <r3d::player> players)
-		: _name(L"Team's Name"), _playersVector(players), _numberPlayers(this->_playersVector.size()), _creationDate(createRandomFounding()), _country(playersGetCountry()),
-		_region(countryGetRegion())
+		: _name(L"Team's Name"), _playersVector(players), _numberPlayers(this->_playersVector.size()), _creationDate(createRandomFounding()), _country(playersDefineCountry()),
+		_region(countryDefineRegion())
 	{}
 
 	void team::addPlayerToTeam(r3d::player player)
@@ -29,8 +29,8 @@ namespace r3d
 		if (this->_numberPlayers < 5)
 		{
 			this->_playersVector.push_back(player);
-			this->_country = playersGetCountry();
-			this->_region = countryGetRegion();
+			this->_country = playersDefineCountry();
+			this->_region = countryDefineRegion();
 		}
 	}
 
@@ -42,11 +42,11 @@ namespace r3d
 		}
 	}
 
-	std::string team::playersGetCountry()
+	std::string team::playersDefineCountry()
 	{
 		std::vector <std::string> playersNationalityVector;
 		int index;
-		int numCountries;
+		std::int64_t numCountries;
 
 		for (int i = 0; i < this->_numberPlayers; i++)
 		{
@@ -66,7 +66,7 @@ namespace r3d
 		return r3d::availableCountries.at(0);
 	}
 
-	std::string team::countryGetRegion()
+	std::string team::countryDefineRegion()
 	{
 		if (this->_country == r3d::availableCountries.at(0))
 		{
@@ -106,6 +106,8 @@ namespace r3d
 			return "Asia";
 		case 4:
 			return "Oceania";
+		default:
+			break;
 		}
 
 		return "Europe";
