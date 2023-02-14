@@ -3,6 +3,8 @@
 #include <vector>
 #include <map>
 #include "player.hpp"
+#include "coach.hpp"
+#include "team.hpp"
 
 namespace r3d
 {
@@ -11,11 +13,20 @@ namespace r3d
 	std::vector <std::string> playersCreateCountriesVector(const std::size_t numCountries);
 
 	std::vector <std::string> playersGetCountriesByRankingRange(std::vector <std::string> sortedPlayerCountriesVector, std::size_t beginIndex, std::size_t endIndex,
-																std::vector <std::string> countriesToDraw, std::string tierPlayer);
+		std::vector <std::string> countriesToDraw, std::string tierPlayer);
 
-	std::vector <std::string> playersCountriesSortBySkillLevel(const std::size_t numTeams);
+	std::vector <std::string> playersCountriesSortBySkillLevel(const std::size_t numPlayers);
 
 	std::vector <r3d::player> createPlayersVector(const std::size_t numTeams);
+
+	std::vector <std::string> coachGetCountriesByRankingRange(std::vector <std::string> sortedCoachCountriesVector, std::size_t beginIndex, std::size_t endIndex,
+		std::vector <std::string> countriesToDraw, std::string tierCoach);
+
+	std::vector <std::string> coachsCountriesSortBySkillLevel(const std::size_t numCoachs);
+
+	std::vector <r3d::coach> createCoachsVector(const std::size_t numTeams);
+
+	std::vector <r3d::team> createTeamsVector(const std::size_t numTeams);
 
 	const std::string* countryGetCulture(const std::string& country);
 
@@ -182,7 +193,7 @@ namespace r3d
 		{availableCountries.at(38), L"us"},//South Africa - american
 		{availableCountries.at(39), L"es"},
 		{availableCountries.at(40), L"de"},//Switzerland - german
-		{availableCountries.at(41), L"ar"}};//Uruguay - argentinian
+		{availableCountries.at(41), L"ar"} };//Uruguay - argentinian
 
 	static inline const std::map <std::string, std::string> countryToRegion{
 		{availableCountries.at(0), "International"},
@@ -198,7 +209,7 @@ namespace r3d
 		{availableCountries.at(10), "Asia"},
 		{availableCountries.at(11), "Europe"},
 		{availableCountries.at(12), "Europe"},
-		{availableCountries.at(13), "CiS"},
+		{availableCountries.at(13), "CIS"},
 		{availableCountries.at(14), "Europe"},
 		{availableCountries.at(15), "Europe"},
 		{availableCountries.at(16), "CIS"},
@@ -226,7 +237,7 @@ namespace r3d
 		{availableCountries.at(38), "Americas"},//South Africa - american
 		{availableCountries.at(39), "Europe"},
 		{availableCountries.at(40), "Europe"},//Switzerland - german
-		{availableCountries.at(41), "Americas"}};//Uruguay - argentinian
+		{availableCountries.at(41), "Americas"} };//Uruguay - argentinian
 
 	static inline const std::map <std::string, float> teamsCountryDistribution{
 		{availableCountries.at(0), 0.082},
@@ -291,4 +302,47 @@ namespace r3d
 		{availableCountries.at(39), 0.0137},
 		{availableCountries.at(40), 0.0093},
 		{availableCountries.at(41), 0.0093}, };
+
+	static inline const std::map <std::string, float> coachCountryDistribution{
+		{availableCountries.at(1), 0.028},
+		{availableCountries.at(2), 0.042},
+		{availableCountries.at(3), 0.109},
+		{availableCountries.at(4), 0.02},
+		{availableCountries.at(5), 0.02},
+		{availableCountries.at(6), 0.086},
+		{availableCountries.at(7), 0.029},
+		{availableCountries.at(8), 0.03},
+		{availableCountries.at(9), 0.029},
+		{availableCountries.at(10), 0.023},
+		{availableCountries.at(11), 0.064},
+		{availableCountries.at(12), 0.023},
+		{availableCountries.at(13), 0.085},
+		{availableCountries.at(14), 0.048},
+		{availableCountries.at(15), 0.02},
+		{availableCountries.at(16), 0.035},
+		{availableCountries.at(17), 0.023},
+		{availableCountries.at(18), 0.088},
+		{availableCountries.at(19), 0.01},
+		{availableCountries.at(20), 0.011},
+		{availableCountries.at(21), 0.011},
+		{availableCountries.at(22), 0.015},
+		{availableCountries.at(23), 0.01},
+		{availableCountries.at(24), 0.011},
+		{availableCountries.at(25), 0.011},
+		{availableCountries.at(26), 0.011},
+		{availableCountries.at(27), 0.015},
+		{availableCountries.at(28), 0.01},
+		{availableCountries.at(29), 0.011},
+		{availableCountries.at(30), 0.01},
+		{availableCountries.at(31), 0.011},
+		{availableCountries.at(32), 0.01},
+		{availableCountries.at(33), 0.01},
+		{availableCountries.at(34), 0.011},
+		{availableCountries.at(35), 0.011},
+		{availableCountries.at(36), 0.011},
+		{availableCountries.at(37), 0.011},
+		{availableCountries.at(38), 0.01},
+		{availableCountries.at(39), 0.011},
+		{availableCountries.at(40), 0.01},
+		{availableCountries.at(41), 0.01}, };
 }

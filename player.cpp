@@ -16,20 +16,22 @@ namespace r3d
 		this->_skillLevel = 0;
 	}
 
-	player::player(std::wstring name, std::wstring nickname, std::string nationality, std::string born, std::string roleCT, std::string roleTR, char gender,
-					std::uint8_t skillLevel, std::string currentDate)
-		: _name(name), _nickname(nickname), _nationality(nationality), _born(born), _roleCT(roleCT), _roleTR(roleTR), _gender(gender), _age(setAge(currentDate)),
-		_skillLevel(skillLevel)
+	player::player(std::wstring name, std::wstring nickname, std::string nationality, std::string born, std::string primaryRoleCT, std::string primaryRoleTR,
+		std::string secondaryRoleCT, std::string secondaryRoleTR, char gender, std::uint8_t skillLevel, std::string currentDate)
+		: _name(name), _nickname(nickname), _nationality(nationality), _born(born), _primaryRoleCT(primaryRoleCT), _primaryRoleTR(primaryRoleTR), _secondaryRoleCT(secondaryRoleCT),
+		_secondaryRoleTR(secondaryRoleTR), _gender(gender), _age(setAge(currentDate)), _skillLevel(skillLevel)
 	{}
 
-	player::player(std::string& country, char gender)
-		: _name(createRandomName(country, gender)), _nickname(createRandomNick(this->_name)), _nationality(country), _born(createRandomBorn()), _roleCT(chooseRandomRoleCT()),
-		_roleTR(chooseRandomRoleTR()), _gender(gender), _age(setAge("07/02/2023")), _skillLevel(createRandomSkillLevel())
+	player::player(std::string country, char gender)
+		: _name(createRandomName(country, gender)), _nickname(createRandomNick(this->_name)), _nationality(country), _born(createRandomBorn()), _primaryRoleCT(chooseRandomPrimaryRoleCT()),
+		_primaryRoleTR(chooseRandomPrimaryRoleTR()), _secondaryRoleCT(chooseRandomSecondaryRoleCT()), _secondaryRoleTR(chooseRandomSecondaryRoleTR()), _gender(gender),
+		_age(setAge("12/02/2023")), _skillLevel(createRandomSkillLevel())
 	{}
 
-	player::player(std::string& country, char tierLettre, char gender)
-		: _name(createRandomName(country, gender)), _nickname(createRandomNick(this->_name)), _nationality(country), _born(createRandomBorn()), _roleCT(chooseRandomRoleCT()),
-		_roleTR(chooseRandomRoleTR()), _gender(gender), _age(setAge("09/02/2023")), _skillLevel(createRandomSkillLevelByTier(tierLettre))
+	player::player(std::string country, char tierLettre, char gender)
+		: _name(createRandomName(country, gender)), _nickname(createRandomNick(this->_name)), _nationality(country), _born(createRandomBorn()), _primaryRoleCT(chooseRandomPrimaryRoleCT()),
+		_primaryRoleTR(chooseRandomPrimaryRoleTR()), _secondaryRoleCT(chooseRandomSecondaryRoleCT()), _secondaryRoleTR(chooseRandomSecondaryRoleTR()), _gender(gender),
+		_age(setAge("12/02/2023")), _skillLevel(createRandomSkillLevelByTier(tierLettre))
 	{}
 
 	std::uint8_t player::setAge(std::string currentDate)
@@ -61,10 +63,35 @@ namespace r3d
 		return this->_nationality;
 	}
 
+	std::string player::getPrimaryRoleCT()
+	{
+		return this->_primaryRoleCT;
+	}
+
+	std::string player::getPrimaryRoleTR()
+	{
+		return this->_primaryRoleTR;
+	}
+
+	std::string player::getSecondaryRoleCT()
+	{
+		return this->_secondaryRoleCT;
+	}
+
+	std::string player::getSecondaryRoleTR()
+	{
+		return this->_secondaryRoleTR;
+	}
+
+	std::uint8_t player::getSkillLevel()
+	{
+		return this->_skillLevel;
+	}
+
 	void player::showInformation()
 	{
 		std::wcout << "Nome do Jogador é " << this->_name << "\nNickname do jogador é " << this->_nickname << "\nNacionalidade é " << this->_nationality.c_str() <<
-			"\nNasceu em " << this->_born.c_str() << "\nJoga de CT como " << this->_roleCT.c_str() << "\nJOga de TR como " << this->_roleTR.c_str() << "\nSexo " <<
+			"\nNasceu em " << this->_born.c_str() << "\nJoga de CT como " << this->_primaryRoleCT.c_str() << "\nJOga de TR como " << this->_primaryRoleTR.c_str() << "\nSexo " <<
 			this->_gender << "\nCom skill level de " << this->_skillLevel << "\nE tem " << this->_age << " anos\n";
 	}
 
@@ -137,18 +164,44 @@ namespace r3d
 		return dayString + "/" + monthString + "/" + std::to_string(year);
 	}
 
-	std::string player::chooseRandomRoleCT()
+	std::string player::chooseRandomPrimaryRoleCT()
 	{
 		std::string roles[] = { "mid", "rotator", "anchor A", "anchor B", "joker" };
 
 		return roles[effolkronium::random_thread_local::get<int>(0, 4)];
 	}
 
-	std::string player::chooseRandomRoleTR()
+	std::string player::chooseRandomPrimaryRoleTR()
 	{
 		std::string roles[] = { "entry", "support", "lurker", "trader", "joker" };
 
 		return roles[effolkronium::random_thread_local::get<int>(0, 4)];
+	}
+
+	std::string player::chooseRandomSecondaryRoleCT()
+	{
+		std::string roles[] = { "mid", "rotator", "anchor A", "anchor B", "joker" };
+		std::string role = "";
+		do
+		{
+			role = roles[effolkronium::random_thread_local::get<int>(0, 4)];
+
+		} while (role == this->_primaryRoleCT);
+
+		return role;
+	}
+
+	std::string player::chooseRandomSecondaryRoleTR()
+	{
+		std::string roles[] = { "entry", "support", "lurker", "trader", "joker" };
+		std::string role = "";
+		do
+		{
+			role = roles[effolkronium::random_thread_local::get<int>(0, 4)];
+
+		} while (role == this->_primaryRoleTR);
+
+		return role;
 	}
 
 	std::uint8_t player::createRandomSkillLevel()

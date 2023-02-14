@@ -53,7 +53,7 @@ namespace r3d
 	}
 
 	std::vector <std::string> playersGetCountriesByRankingRange(std::vector <std::string> sortedPlayerCountriesVector, std::size_t beginIndex, std::size_t endIndex,
-																std::vector <std::string> countriesToDraw, std::string tierPlayer)
+		std::vector <std::string> countriesToDraw, std::string tierPlayer)
 	{
 		std::size_t countriesLimitVector = 0;
 		std::size_t numberCountriesVector = 0;
@@ -76,20 +76,20 @@ namespace r3d
 		return sortedPlayerCountriesVector;
 	}
 
-	std::vector <std::string> playersCountriesSortBySkillLevel(const std::size_t numTeams)
+	std::vector <std::string> playersCountriesSortBySkillLevel(const std::size_t numPlayers)
 	{
-		std::size_t numPlayers = numTeams * 6;
 		std::vector <std::string> sortedPlayerCountriesVector{ numPlayers * 2 };
 
 		std::size_t beginIndex = 0;
 		std::size_t endIndex = (int)std::round(numPlayers * 0.00184); //tier 1 = define 2 highest overall for 1080 players or 180 teams
-		std::vector <std::string> avaibleCountriesForTier = { "Sweden", "Sweden", "France", "France", "Ukraine", "Ukraine", "Brazil", "Brazil", "Denmark", "Bosnia", "Slovakia" };
+		std::vector <std::string> avaibleCountriesForTier = { "Sweden", "Sweden", "France", "France", "Ukraine", "Ukraine", "Brazil", "Brazil", "Denmark", "Bosnia",
+															"Slovakia" };
 		sortedPlayerCountriesVector = playersGetCountriesByRankingRange(sortedPlayerCountriesVector, beginIndex, endIndex, avaibleCountriesForTier, "A");
 
 		beginIndex = endIndex;
 		endIndex += (int)std::round(numPlayers * 0.00278); //tier 1 = define 3-5 for 1080 players or 180 teams
-		avaibleCountriesForTier = { "Russia", "Russia", "Russia", "Denmark", "Denmark", "Denmark", "Bosnia", "Bosnia", "Poland", "Poland", "Sweden", "France", "Ukraine", "Brazil",
-									"Norway", "United States" };
+		avaibleCountriesForTier = { "Russia", "Russia", "Russia", "Denmark", "Denmark", "Denmark", "Bosnia", "Bosnia", "Poland", "Poland", "Sweden", "France", "Ukraine",
+									"Brazil", "Norway", "United States" };
 		sortedPlayerCountriesVector = playersGetCountriesByRankingRange(sortedPlayerCountriesVector, beginIndex, endIndex, avaibleCountriesForTier, "B");
 
 		beginIndex = endIndex;
@@ -117,7 +117,7 @@ namespace r3d
 		avaibleCountriesForTier = { "Argentina", "Australia", "Brazil", "Czech Republic", "Denmark", "Finland", "France", "Germany", "Mongolia", "Poland", "Portugal", "Russia",
 									"Sweden", "Turkey", "Ukraine", "United Kingdom", "United States", "Belgium", "Bosnia", "Bulgaria", "Canada", "Chile", "Estonia", "Hungary",
 									"Israel", "Kazakhstan", "Kosovo", "Latvia", "Montenegro", "Netherlands", "Norway", "Romania", "Serbia", "Slovakia", "South Africa", "Spain",
-									"Switzerland", "Uruguay", };//whitout China, Mexico and New Zealand
+									"Switzerland", "Uruguay" };//whitout China, Mexico and New Zealand
 		sortedPlayerCountriesVector = playersGetCountriesByRankingRange(sortedPlayerCountriesVector, beginIndex, endIndex, avaibleCountriesForTier, "F");
 
 		beginIndex = endIndex;
@@ -125,7 +125,7 @@ namespace r3d
 		avaibleCountriesForTier = { "Argentina", "Australia", "Brazil", "China", "Czech Republic", "Denmark", "Finland", "France", "Germany", "Mongolia", "Poland", "Portugal",
 									"Russia", "Sweden", "Turkey", "Ukraine", "United Kingdom", "United States", "Belgium", "Bosnia", "Bulgaria", "Canada", "Chile", "Estonia",
 									"Hungary", "Israel", "Kazakhstan", "Kosovo", "Latvia", "Mexico", "Montenegro", "Netherlands", "New Zealand", "Norway", "Romania", "Serbia",
-									"Slovakia", "South Africa", "Spain", "Switzerland", "Uruguay", };
+									"Slovakia", "South Africa", "Spain", "Switzerland", "Uruguay" };
 		sortedPlayerCountriesVector = playersGetCountriesByRankingRange(sortedPlayerCountriesVector, beginIndex, endIndex, avaibleCountriesForTier, "G");
 
 		beginIndex = endIndex;
@@ -133,15 +133,15 @@ namespace r3d
 		avaibleCountriesForTier = { "Argentina", "Australia", "Brazil", "China", "Czech Republic", "Denmark", "Finland", "France", "Germany", "Mongolia", "Poland", "Portugal",
 									"Russia", "Sweden", "Turkey", "Ukraine", "United Kingdom", "United States", "Belgium", "Bosnia", "Bulgaria", "Canada", "Chile", "Estonia",
 									"Hungary", "Israel", "Kazakhstan", "Kosovo", "Latvia", "Mexico", "Montenegro", "Netherlands", "New Zealand", "Norway", "Romania", "Serbia",
-									"Slovakia", "South Africa", "Spain", "Switzerland", "Uruguay", };
+									"Slovakia", "South Africa", "Spain", "Switzerland", "Uruguay" };
 		sortedPlayerCountriesVector = playersGetCountriesByRankingRange(sortedPlayerCountriesVector, beginIndex, endIndex, avaibleCountriesForTier, "H");
 
 		beginIndex = endIndex;
-		endIndex = numPlayers;
+		endIndex = numPlayers; //tier 5 = define 901 - 1080 for 1080 players or 180 teams
 		avaibleCountriesForTier = { "Argentina", "Australia", "Brazil", "China", "Czech Republic", "Denmark", "Finland", "France", "Germany", "Mongolia", "Poland", "Portugal",
 									"Russia", "Sweden", "Turkey", "Ukraine", "United Kingdom", "United States", "Belgium", "Bosnia", "Bulgaria", "Canada", "Chile", "Estonia",
 									"Hungary", "Israel", "Kazakhstan", "Kosovo", "Latvia", "Mexico", "Montenegro", "Netherlands", "New Zealand", "Norway", "Romania", "Serbia",
-									"Slovakia", "South Africa", "Spain", "Switzerland", "Uruguay", };
+									"Slovakia", "South Africa", "Spain", "Switzerland", "Uruguay" };
 		sortedPlayerCountriesVector = playersGetCountriesByRankingRange(sortedPlayerCountriesVector, beginIndex, endIndex, avaibleCountriesForTier, "I");
 
 		return sortedPlayerCountriesVector;
@@ -150,7 +150,7 @@ namespace r3d
 	std::vector <r3d::player> createPlayersVector(const std::size_t numTeams)
 	{
 		std::vector <r3d::player> playersVector{ numTeams * 6 };
-		std::vector <std::string> countriesAndTierSkill = playersCountriesSortBySkillLevel(numTeams);
+		std::vector <std::string> countriesAndTierSkill = playersCountriesSortBySkillLevel(numTeams * 6);
 
 		for (int i = 0; i < playersVector.size(); i++)
 		{
@@ -158,6 +158,107 @@ namespace r3d
 		}
 
 		return playersVector;
+	}
+
+	std::vector <std::string> coachGetCountriesByRankingRange(std::vector <std::string> sortedCoachCountriesVector, std::size_t beginIndex, std::size_t endIndex,
+		std::vector <std::string> countriesToDraw, std::string tierCoach)
+	{
+		std::size_t countriesLimitVector = 0;
+		std::size_t numberCountriesVector = 0;
+		std::string randomCountry = "";
+
+		for (beginIndex; beginIndex < endIndex; beginIndex++)
+		{
+			do
+			{
+				randomCountry = countriesToDraw.at(effolkronium::random_thread_local::get<std::size_t>(0, countriesToDraw.size() - 1));
+				countriesLimitVector = (int)std::round(sortedCoachCountriesVector.size() * coachCountryDistribution.at(randomCountry));
+				numberCountriesVector = std::count(sortedCoachCountriesVector.begin(), sortedCoachCountriesVector.end(), randomCountry);
+
+			} while (countriesLimitVector <= numberCountriesVector);
+
+			sortedCoachCountriesVector.at(beginIndex) = randomCountry;
+			sortedCoachCountriesVector.at(beginIndex + (sortedCoachCountriesVector.size() / 2)) = tierCoach;
+		}
+
+		return sortedCoachCountriesVector;
+	}
+
+	std::vector <std::string> coachsCountriesSortBySkillLevel(const std::size_t numCoachs)
+	{
+		std::vector <std::string> sortedCoachCountriesVector{ numCoachs * 2 };
+
+		std::size_t beginIndex = 0;
+		std::size_t endIndex = (int)std::round(numCoachs * 0.047); //tier 1
+		std::vector <std::string> avaibleCountriesForTier = { "Australia", "Brazil", "Czech Republic", "Denmark", "Finland", "France", "Germany", "Poland", "Russia",
+															"Sweden", "Turkey", "Ukraine", "United Kingdom", "United States", "Belgium", "Bosnia", "Bulgaria", "Canada",
+															"Estonia", "Hungary", "Israel", "Kazakhstan", "Latvia", "Netherlands", "Norway", "Serbia", "Slovakia" };
+		sortedCoachCountriesVector = coachGetCountriesByRankingRange(sortedCoachCountriesVector, beginIndex, endIndex, avaibleCountriesForTier, "A");
+
+		beginIndex = endIndex;
+		endIndex += (int)std::round(numCoachs * 0.094); //tier 2
+		avaibleCountriesForTier = { "Argentina", "Australia", "Brazil", "Czech Republic", "Denmark", "Finland", "France", "Germany", "Mongolia", "Poland", "Portugal", "Russia",
+									"Sweden", "Turkey", "Ukraine", "United Kingdom", "United States", "Belgium", "Bosnia", "Bulgaria", "Canada", "Chile", "Estonia", "Hungary",
+									"Israel", "Kazakhstan", "Kosovo", "Latvia", "Montenegro", "Netherlands", "Norway", "Romania", "Serbia", "Slovakia", "South Africa", "Spain",
+									"Switzerland", "Uruguay" };//whitout China, Mexico and New Zealand
+		sortedCoachCountriesVector = coachGetCountriesByRankingRange(sortedCoachCountriesVector, beginIndex, endIndex, avaibleCountriesForTier, "B");
+
+		beginIndex = endIndex;
+		endIndex += (int)std::round(numCoachs * 0.464); //tier 3
+		avaibleCountriesForTier = { "Argentina", "Australia", "Brazil", "China", "Czech Republic", "Denmark", "Finland", "France", "Germany", "Mongolia", "Poland", "Portugal",
+									"Russia", "Sweden", "Turkey", "Ukraine", "United Kingdom", "United States", "Belgium", "Bosnia", "Bulgaria", "Canada", "Chile", "Estonia",
+									"Hungary", "Israel", "Kazakhstan", "Kosovo", "Latvia", "Mexico", "Montenegro", "Netherlands", "New Zealand", "Norway", "Romania", "Serbia",
+									"Slovakia", "South Africa", "Spain", "Switzerland", "Uruguay" };
+		sortedCoachCountriesVector = coachGetCountriesByRankingRange(sortedCoachCountriesVector, beginIndex, endIndex, avaibleCountriesForTier, "C");
+
+		beginIndex = endIndex;
+		endIndex += (int)std::round(numCoachs * 0.232); //tier 4
+		avaibleCountriesForTier = { "Argentina", "Australia", "Brazil", "China", "Czech Republic", "Denmark", "Finland", "France", "Germany", "Mongolia", "Poland", "Portugal",
+									"Russia", "Sweden", "Turkey", "Ukraine", "United Kingdom", "United States", "Belgium", "Bosnia", "Bulgaria", "Canada", "Chile", "Estonia",
+									"Hungary", "Israel", "Kazakhstan", "Kosovo", "Latvia", "Mexico", "Montenegro", "Netherlands", "New Zealand", "Norway", "Romania", "Serbia",
+									"Slovakia", "South Africa", "Spain", "Switzerland", "Uruguay" };
+		sortedCoachCountriesVector = coachGetCountriesByRankingRange(sortedCoachCountriesVector, beginIndex, endIndex, avaibleCountriesForTier, "D");
+
+		beginIndex = endIndex;
+		endIndex = numCoachs; //tier 5
+		avaibleCountriesForTier = { "Argentina", "Australia", "Brazil", "China", "Czech Republic", "Denmark", "Finland", "France", "Germany", "Mongolia", "Poland", "Portugal",
+									"Russia", "Sweden", "Turkey", "Ukraine", "United Kingdom", "United States", "Belgium", "Bosnia", "Bulgaria", "Canada", "Chile", "Estonia",
+									"Hungary", "Israel", "Kazakhstan", "Kosovo", "Latvia", "Mexico", "Montenegro", "Netherlands", "New Zealand", "Norway", "Romania", "Serbia",
+									"Slovakia", "South Africa", "Spain", "Switzerland", "Uruguay" };
+		sortedCoachCountriesVector = coachGetCountriesByRankingRange(sortedCoachCountriesVector, beginIndex, endIndex, avaibleCountriesForTier, "E");
+
+		return sortedCoachCountriesVector;
+	}
+
+	std::vector <r3d::coach> createCoachsVector(const std::size_t numTeams)
+	{
+		std::size_t numCoachs = (std::size_t)std::floor(numTeams * 1.2);
+		std::vector <r3d::coach> coachsVector{ numCoachs };
+		std::vector <std::string> countriesAndTierSkill = coachsCountriesSortBySkillLevel(numCoachs);
+
+		for (int i = 0; i < coachsVector.size(); i++)
+		{
+			coachsVector.at(i) = r3d::coach(countriesAndTierSkill.at(i), countriesAndTierSkill.at(i + numCoachs)[0], 'm');
+		}
+
+		return coachsVector;
+	}
+
+	std::vector <r3d::team> createTeamsVector(const std::size_t numTeams)
+	{
+		std::vector <r3d::team> teamsVector{ numTeams };
+		std::vector <r3d::player> playersVector = createPlayersVector(numTeams);
+		std::vector <r3d::coach> coachsVector = createCoachsVector(numTeams);
+		int x = 1;
+
+		for (int i = 0; i < numTeams; i++)
+		{
+			teamsVector.at(i) = r3d::team(L"Team " + std::to_wstring(x++));
+			playersVector = teamsVector.at(i).playersDraft(playersVector);
+			coachsVector = teamsVector.at(i).coachDraft(coachsVector);
+		}
+
+		return teamsVector;
 	}
 
 	const std::string* countryGetCulture(const std::string& country)

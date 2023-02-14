@@ -15,13 +15,13 @@ int main()
 	dasmig::ng::instance().load("D:/a_cursos/projetos_CPP/CSManager/thirdParty/nameGenerator/resources");
 	dasmig::nng::instance().load("D:/a_cursos/projetos_CPP/CSManager/thirdParty/nicknameGenerator/resources");
 
-	std::vector <r3d::player> test = r3d::createPlayersVector(100);
-
-	for (int i = 0; i < test.size(); i++)
+	std::vector <r3d::team> test = r3d::createTeamsVector(100);
+	
+	for (int i = 0; i < 100; i++)
 	{
 		test.at(i).showInformation();
-		std::cout << "\n";
+		std::cout << std::endl;
 	}
-
+	
 	return 0;
 }

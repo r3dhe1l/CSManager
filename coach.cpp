@@ -21,9 +21,14 @@ namespace r3d
 		: _name(name), _nickname(nickname), _nationality(nationality), _born(born), _gender(gender), _age(setAge(currentDate)), _rating(rating)
 	{}
 
-	coach::coach(std::string& country, char gender)
+	coach::coach(std::string country, char gender)
 		: _name(createRandomName(country, gender)), _nickname(createRandomNick(this->_name)), _nationality(country), _born(createRandomBorn()), _gender(gender),
 		_age(setAge("07/02/2023")), _rating(createRandomRating())
+	{}
+
+	coach::coach(std::string country, char tierLettre, char gender)
+		: _name(createRandomName(country, gender)), _nickname(createRandomNick(this->_name)), _nationality(country), _born(createRandomBorn()), _gender(gender),
+		_age(setAge("09/02/2023")), _rating(createRandomRatingByTier(tierLettre))
 	{}
 
 	std::uint8_t coach::setAge(std::string currentDate)
@@ -53,6 +58,16 @@ namespace r3d
 	std::wstring coach::getName()
 	{
 		return this->_name;
+	}
+
+	std::uint8_t coach::getRating()
+	{
+		return this->_rating;
+	}
+
+	std::string coach::getNationality()
+	{
+		return this->_nationality;
 	}
 
 	void coach::showInformation()
@@ -132,6 +147,28 @@ namespace r3d
 
 	std::uint8_t coach::createRandomRating()
 	{
-		return effolkronium::random_thread_local::get<int>(1, 100);
+		return effolkronium::random_thread_local::get<int>(55, 100);
+	}
+
+	std::uint8_t coach::createRandomRatingByTier(char tierLettre)
+	{
+		switch (tierLettre)
+		{
+		case 'A':
+			return effolkronium::random_thread_local::get<int>(82, 100);
+
+		case 'B':
+			return effolkronium::random_thread_local::get<int>(78, 84);
+
+		case 'C':
+			return effolkronium::random_thread_local::get<int>(69, 80);
+
+		case 'D':
+			return effolkronium::random_thread_local::get<int>(64, 72);
+
+		case 'E':
+			return effolkronium::random_thread_local::get<int>(55, 67);
+		}
+		return 0;
 	}
 }

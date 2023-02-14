@@ -9,16 +9,26 @@ namespace r3d
 
 		player();
 
-		player(std::wstring name, std::wstring nickname, std::string nationality, std::string born, std::string roleCT, std::string roleTR, char gender,
-				std::uint8_t skillLevel, std::string currentDate);
+		player(std::wstring name, std::wstring nickname, std::string nationality, std::string born, std::string primaryRoleCT, std::string primaryRoleTR,
+			std::string secondaryRoleCT, std::string secondaryRoleTR, char gender, std::uint8_t skillLevel, std::string currentDate);
 
-		player(std::string& country, char gender);
+		player(std::string country, char gender);
 
-		player(std::string& country, char tierLettre, char gender);
+		player(std::string country, char tierLettre, char gender);
 
 		std::uint8_t setAge(std::string currentDate);
 
 		std::string getNationality();
+
+		std::string getPrimaryRoleCT();
+
+		std::string getPrimaryRoleTR();
+
+		std::string getSecondaryRoleCT();
+
+		std::string getSecondaryRoleTR();
+
+		std::uint8_t getSkillLevel();
 
 		void showInformation();
 
@@ -27,8 +37,10 @@ namespace r3d
 		std::wstring _nickname;
 		std::string _nationality;
 		std::string _born;
-		std::string _roleCT;
-		std::string _roleTR;
+		std::string _primaryRoleCT;
+		std::string _primaryRoleTR;
+		std::string _secondaryRoleCT;
+		std::string _secondaryRoleTR;
 		char _gender;
 		std::uint8_t _age;
 		std::uint8_t _skillLevel;
@@ -39,9 +51,13 @@ namespace r3d
 
 		std::string createRandomBorn();
 
-		std::string chooseRandomRoleCT();
+		std::string chooseRandomPrimaryRoleCT();
 
-		std::string chooseRandomRoleTR();
+		std::string chooseRandomPrimaryRoleTR();
+
+		std::string chooseRandomSecondaryRoleCT();
+
+		std::string chooseRandomSecondaryRoleTR();
 
 		std::uint8_t createRandomSkillLevel();
 

@@ -12,11 +12,17 @@ namespace r3d
 
 		coach(std::wstring name, std::wstring nickname, std::string nationality, std::string born, char gender, std::uint8_t rating, std::string currentDate);
 
-		coach(std::string& country, char gender = 'm');
+		coach(std::string country, char gender);
+
+		coach(std::string country, char tierLettre, char gender);
 
 		std::uint8_t setAge(std::string currentDate);
 
 		std::wstring getName();
+
+		std::uint8_t getRating();
+
+		std::string getNationality();
 
 		void showInformation();
 
@@ -36,5 +42,7 @@ namespace r3d
 		std::string createRandomBorn();
 
 		std::uint8_t createRandomRating();
+
+		std::uint8_t createRandomRatingByTier(char tierLettre);
 	};
 }
