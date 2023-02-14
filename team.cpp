@@ -66,7 +66,7 @@ namespace r3d
 			addPlayerToTeam(possiblePlayers.at(0));
 			possiblePlayers.erase(possiblePlayers.begin());
 		}
-		int maxPlayers = 5 - this->_numberPlayers;
+		int maxPlayers = 5 - (int)this->_numberPlayers;
 		for (int i = 0; i < maxPlayers; i++)
 		{
 			int index = avaiblePlayer(possiblePlayers);
@@ -92,12 +92,12 @@ namespace r3d
 		std::wcout << this->_name << " " << this->_country.c_str() << " " << this->_region.c_str() << " " << this->_creationDate.c_str() << " " << this->_numberPlayers << std::endl;
 		for (int i = 0; i < this->_numberPlayers; i++)
 		{
-			std::wcout << (int)this->_playersVector.at(i).getSkillLevel() << " - " << this->_rolesCTFilled.at(i).c_str() << " - " << this->_rolesTRFilled.at(i).c_str() <<
+			std::wcout << this->_playersVector.at(i).getSkillLevel() << " - " << this->_rolesCTFilled.at(i).c_str() << " - " << this->_rolesTRFilled.at(i).c_str() <<
 				" - " << this->_playersVector.at(i).getNationality().c_str() << std::endl;
 		}
 		if (this->_coach.getName() != L"")
 		{
-			std::cout << "coach: " << (int)this->_coach.getRating() << std::endl;
+			std::cout << "coach: " << this->_coach.getRating() << std::endl;
 		}
 
 	}

@@ -29,16 +29,6 @@ namespace r3d
 		void showInformation();
 
 	private:
-		std::wstring _name;
-		std::string _country;
-		std::string _region;
-		std::string _creationDate;
-		std::size_t _numberPlayers;
-		std::vector<r3d::player> _playersVector;
-		r3d::coach _coach;
-		std::vector<std::string> _rolesCTFilled{ 5 };
-		std::vector<std::string> _rolesTRFilled{ 5 };
-
 		std::string playersDefineCountry();
 
 		std::string countryDefineRegion();
@@ -54,5 +44,15 @@ namespace r3d
 		int avaiblePlayer(std::vector <r3d::player> possiblePlayers);
 
 		int avaibleCoach(std::vector <r3d::coach> possibleCoachs);
+
+		std::wstring _name;
+		std::string _country;
+		std::string _region;
+		std::string _creationDate;
+		std::size_t _numberPlayers;
+		std::vector<r3d::player> _playersVector;
+		r3d::coach _coach;
+		std::vector<std::string> _rolesCTFilled{ 5 };
+		std::vector<std::string> _rolesTRFilled{ 5 };
 	};
 }

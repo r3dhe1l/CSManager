@@ -17,7 +17,7 @@ namespace r3d
 		this->_age = 0;
 	}
 
-	coach::coach(std::wstring name, std::wstring nickname, std::string nationality, std::string born, char gender, std::uint8_t rating, std::string currentDate)
+	coach::coach(std::wstring name, std::wstring nickname, std::string nationality, std::string born, char gender, std::uint16_t rating, std::string currentDate)
 		: _name(name), _nickname(nickname), _nationality(nationality), _born(born), _gender(gender), _age(setAge(currentDate)), _rating(rating)
 	{}
 
@@ -31,7 +31,7 @@ namespace r3d
 		_age(setAge("09/02/2023")), _rating(createRandomRatingByTier(tierLettre))
 	{}
 
-	std::uint8_t coach::setAge(std::string currentDate)
+	std::uint16_t coach::setAge(std::string currentDate)
 	{
 		int currentDay = stoi(currentDate.substr(0, 2));
 		int currentMonth = stoi(currentDate.substr(3, 2));
@@ -60,7 +60,7 @@ namespace r3d
 		return this->_name;
 	}
 
-	std::uint8_t coach::getRating()
+	std::uint16_t coach::getRating()
 	{
 		return this->_rating;
 	}
@@ -145,12 +145,12 @@ namespace r3d
 		return dayString + "/" + monthString + "/" + std::to_string(year);
 	}
 
-	std::uint8_t coach::createRandomRating()
+	std::uint16_t coach::createRandomRating()
 	{
 		return effolkronium::random_thread_local::get<int>(55, 100);
 	}
 
-	std::uint8_t coach::createRandomRatingByTier(char tierLettre)
+	std::uint16_t coach::createRandomRatingByTier(char tierLettre)
 	{
 		switch (tierLettre)
 		{

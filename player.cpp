@@ -17,7 +17,7 @@ namespace r3d
 	}
 
 	player::player(std::wstring name, std::wstring nickname, std::string nationality, std::string born, std::string primaryRoleCT, std::string primaryRoleTR,
-		std::string secondaryRoleCT, std::string secondaryRoleTR, char gender, std::uint8_t skillLevel, std::string currentDate)
+		std::string secondaryRoleCT, std::string secondaryRoleTR, char gender, std::uint16_t skillLevel, std::string currentDate)
 		: _name(name), _nickname(nickname), _nationality(nationality), _born(born), _primaryRoleCT(primaryRoleCT), _primaryRoleTR(primaryRoleTR), _secondaryRoleCT(secondaryRoleCT),
 		_secondaryRoleTR(secondaryRoleTR), _gender(gender), _age(setAge(currentDate)), _skillLevel(skillLevel)
 	{}
@@ -34,7 +34,7 @@ namespace r3d
 		_age(setAge("12/02/2023")), _skillLevel(createRandomSkillLevelByTier(tierLettre))
 	{}
 
-	std::uint8_t player::setAge(std::string currentDate)
+	std::uint16_t player::setAge(std::string currentDate)
 	{
 		int currentDay = stoi(currentDate.substr(0, 2));
 		int currentMonth = stoi(currentDate.substr(3, 2));
@@ -83,7 +83,7 @@ namespace r3d
 		return this->_secondaryRoleTR;
 	}
 
-	std::uint8_t player::getSkillLevel()
+	std::uint16_t player::getSkillLevel()
 	{
 		return this->_skillLevel;
 	}
@@ -204,12 +204,12 @@ namespace r3d
 		return role;
 	}
 
-	std::uint8_t player::createRandomSkillLevel()
+	std::uint16_t player::createRandomSkillLevel()
 	{
 		return effolkronium::random_thread_local::get<int>(55, 100);
 	}
 
-	std::uint8_t player::createRandomSkillLevelByTier(char tierLettre)
+	std::uint16_t player::createRandomSkillLevelByTier(char tierLettre)
 	{
 		switch (tierLettre)
 		{
