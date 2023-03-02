@@ -1,31 +1,6 @@
-#pragma once
-#include <iostream>
-#include <vector>
-#include <map>
-#include "skills.hpp"
-#include "countryChoiceFunctions.hpp"
 
-
-
-namespace r3d
+namespace r3d::skill
 {
-	enum class rolesCT {
-		Mid,
-		Rotator,
-		Anchor_A,
-		Anchor_B,
-		Joker
-	};
-
-	enum class rolesTR {
-		Entry,
-		Support,
-		Lurker,
-		Trader,
-		Joker
-
-	};
-
 	enum class generalAttribute {
 		Motor_Skills, Soft_Skills, Cognitive_Skills, Memorization_Skills, Karma, Accuracy, Reflex, Spray_Control, Movement, Positioning,
 		Aim_Placement, Peeking, Strafe, Pre_Fire, Concentration, Fortitude, Creativity, Aggressiveness, Game_Sense, Commitment, Modesty, Teamwork, Leadership, Charisma
@@ -100,68 +75,5 @@ namespace r3d
 	enum class _positionsTrain {
 		CT_Spawn, T_Spawn, Bomb_A, Bomb_B, Stairs, Back_Site, Sidewalk, Catwalk, Upper, Lower, Halls, Pop, Showers, Main, Connector, Heaven, Hell, Olof, Old_Bomb,
 		Tunnel, Ivy, Pigeons, Alley
-	};
-
-	class player
-	{
-	public:
-
-		player();
-
-		player(std::wstring name, std::wstring nickname, r3d::country::avaibleCountries nationality, std::wstring born, r3d::rolesCT primaryRoleCT, r3d::rolesTR primaryRoleTR,
-			r3d::rolesCT secondaryRoleCT, r3d::rolesTR secondaryRoleTR, dasmig::ng::gender gender, std::uint8_t skillLevel, std::wstring currentDate);
-
-		player(r3d::country::avaibleCountries country, dasmig::ng::gender gender);
-
-		player(r3d::country::avaibleCountries country, int tier, dasmig::ng::gender gender);
-
-		std::uint8_t setAge(std::wstring currentDate);
-
-		r3d::country::avaibleCountries getNationality();
-
-		r3d::rolesCT getPrimaryRoleCT();
-
-		r3d::rolesTR getPrimaryRoleTR();
-
-		r3d::rolesCT getSecondaryRoleCT();
-
-		r3d::rolesTR getSecondaryRoleTR();
-
-		std::uint8_t getSkillLevel();
-
-		void showInformation();
-
-	private:
-		std::wstring createRandomName(r3d::country::avaibleCountries& country, dasmig::ng::gender& gender);
-
-		std::wstring createRandomNick(std::wstring& name);
-
-		std::wstring createRandomBorn();
-
-		r3d::rolesCT chooseRandomPrimaryRoleCT();
-
-		r3d::rolesTR chooseRandomPrimaryRoleTR();
-
-		r3d::rolesCT chooseRandomSecondaryRoleCT();
-
-		r3d::rolesTR chooseRandomSecondaryRoleTR();
-
-		std::uint8_t createRandomSkillLevel();
-
-		std::uint8_t createRandomSkillLevelByTier(int tier);
-
-		std::wstring _name;
-		std::wstring _nickname;
-		r3d::country::avaibleCountries _nationality;
-		std::wstring _born;
-		r3d::rolesCT _primaryRoleCT;
-		r3d::rolesTR _primaryRoleTR;
-		r3d::rolesCT _secondaryRoleCT;
-		r3d::rolesTR _secondaryRoleTR;
-		dasmig::ng::gender _gender;
-		std::uint8_t _age;
-		std::uint8_t _skillLevel;
-		//std::vector <r3d::traits> _traits;
-
 	};
 }

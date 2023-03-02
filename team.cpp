@@ -15,7 +15,7 @@ namespace r3d
 		this->_numberPlayers = 0;
 	}
 
-	team::team(std::wstring name, std::string country, std::string region, std::string creationDate, std::vector <r3d::player> players, r3d::coach coach)
+	team::team(std::wstring name, std::wstring country, std::wstring region, std::wstring creationDate, std::vector <r3d::player> players, r3d::coach coach)
 		: _name(name), _country(country), _region(region), _creationDate(creationDate), _numberPlayers(this->_playersVector.size()), _playersVector(players), _coach(coach),
 		_rolesCTFilled(fillRolesCT()), _rolesTRFilled(fillRolesTR())
 	{}
@@ -89,22 +89,22 @@ namespace r3d
 
 	void team::showInformation()
 	{
-		std::wcout << this->_name << " " << this->_country.c_str() << " " << this->_region.c_str() << " " << this->_creationDate.c_str() << " " << this->_numberPlayers << std::endl;
+		std::wcout << this->_name << L" " << this->_country << L" " << this->_region << L" " << this->_creationDate << L" " << this->_numberPlayers << std::endl;
 		for (int i = 0; i < this->_numberPlayers; i++)
 		{
-			std::wcout << this->_playersVector.at(i).getSkillLevel() << " - " << this->_rolesCTFilled.at(i).c_str() << " - " << this->_rolesTRFilled.at(i).c_str() <<
-				" - " << this->_playersVector.at(i).getNationality().c_str() << std::endl;
+			std::wcout << this->_playersVector.at(i).getSkillLevel() << L" - " << this->_rolesCTFilled.at(i) << L" - " << this->_rolesTRFilled.at(i) <<
+				L" - " << this->_playersVector.at(i).getNationality() << std::endl;
 		}
 		if (this->_coach.getName() != L"")
 		{
-			std::cout << "coach: " << this->_coach.getRating() << std::endl;
+			std::wcout << L"coach: " << this->_coach.getRating() << std::endl;
 		}
 
 	}
 
-	std::string team::playersDefineCountry()
+	std::wstring team::playersDefineCountry()
 	{
-		std::vector <std::string> playersNationalityVector{ 5 };
+		std::vector <std::wstring> playersNationalityVector{ 5 };
 		int index;
 		std::int64_t numCountries;
 
@@ -126,16 +126,16 @@ namespace r3d
 		return r3d::availableCountries.at(0);
 	}
 
-	std::string team::countryDefineRegion()
+	std::wstring team::countryDefineRegion()
 	{
-		std::string region;
+		std::wstring region;
 		this->_country == r3d::availableCountries.at(0) ? region = determineInternationalTeamRegion() : region = *r3d::countryGetRegion(this->_country);
 		return region;
 	}
 
-	std::string team::determineInternationalTeamRegion()
+	std::wstring team::determineInternationalTeamRegion()
 	{
-		std::vector <std::string> playersRegionVector{ 5 };
+		std::vector <std::wstring> playersRegionVector{ 5 };
 
 		for (int i = 0; i < this->_numberPlayers; i++)
 		{
@@ -143,31 +143,31 @@ namespace r3d
 		}
 
 		std::vector <int> vectorNumberOfPLayersByRegion = {
-			(int)std::count(playersRegionVector.begin(), playersRegionVector.end(), "Europe"),
-			(int)std::count(playersRegionVector.begin(), playersRegionVector.end(), "CIS"),
-			(int)std::count(playersRegionVector.begin(), playersRegionVector.end(), "Americas"),
-			(int)std::count(playersRegionVector.begin(), playersRegionVector.end(), "Asia"),
-			(int)std::count(playersRegionVector.begin(), playersRegionVector.end(), "Oceania") };
+			(int)std::count(playersRegionVector.begin(), playersRegionVector.end(), L"Europe"),
+			(int)std::count(playersRegionVector.begin(), playersRegionVector.end(), L"CIS"),
+			(int)std::count(playersRegionVector.begin(), playersRegionVector.end(), L"Americas"),
+			(int)std::count(playersRegionVector.begin(), playersRegionVector.end(), L"Asia"),
+			(int)std::count(playersRegionVector.begin(), playersRegionVector.end(), L"Oceania") };
 
 		if (vectorNumberOfPLayersByRegion.at(0) > 2)
 		{
-			return "Europe";
+			return L"Europe";
 		}
 		else if (vectorNumberOfPLayersByRegion.at(1) > 2)
 		{
-			return "CIS";
+			return L"CIS";
 		}
 		else if (vectorNumberOfPLayersByRegion.at(2) > 2)
 		{
-			return "Americas";
+			return L"Americas";
 		}
 		else if (vectorNumberOfPLayersByRegion.at(3) > 2)
 		{
-			return "Asia";
+			return L"Asia";
 		}
 		else if (vectorNumberOfPLayersByRegion.at(4) > 2)
 		{
-			return "Oceania";
+			return L"Oceania";
 		}
 		else
 		{
@@ -178,21 +178,21 @@ namespace r3d
 			switch (index)
 			{
 			case 1:
-				return "CIS";
+				return L"CIS";
 			case 2:
-				return "Americas";
+				return L"Americas";
 			case 3:
-				return "Asia";
+				return L"Asia";
 			case 4:
-				return "Oceania";
+				return L"Oceania";
 			default:
 				break;
 			}
-			return "Europe";
+			return L"Europe";
 		}
 	}
 
-	std::string team::createRandomFounding()
+	std::wstring team::createRandomFounding()
 	{
 		int year, month, day = 0;
 		year = effolkronium::random_thread_local::get<int>(2013, 2022);
@@ -227,35 +227,35 @@ namespace r3d
 			break;
 		}
 
-		std::string dayString, monthString;
+		std::wstring dayString, monthString;
 
-		day > 9 ? (dayString = std::to_string(day)) : dayString = "0" + std::to_string(day);
-		month > 9 ? (monthString = std::to_string(month)) : monthString = "0" + std::to_string(month);
+		day > 9 ? (dayString = std::to_wstring(day)) : dayString = L"0" + std::to_wstring(day);
+		month > 9 ? (monthString = std::to_wstring(month)) : monthString = L"0" + std::to_wstring(month);
 
-		return dayString + "/" + monthString + "/" + std::to_string(year);
+		return dayString + L"/" + monthString + L"/" + std::to_wstring(year);
 	}
 
-	std::vector<std::string> team::fillRolesCT()
+	std::vector<std::wstring> team::fillRolesCT()
 	{
-		std::vector<std::string> rolesCT{ 5 };
+		std::vector<std::wstring> rolesCT{ 5 };
 
 		for (int i = 0; i < this->_numberPlayers; i++)
 		{
-			std::find(rolesCT.begin(), rolesCT.end(), this->_playersVector.at(i).getPrimaryRoleCT()) == rolesCT.end() ? rolesCT.at(i) = this->_playersVector.at(i).getPrimaryRoleCT()
-				: rolesCT.at(i) = this->_playersVector.at(i).getSecondaryRoleCT();
+			std::find(rolesCT.begin(), rolesCT.end(), this->_playersVector.at(i).getPrimaryRoleCT()) == rolesCT.end() ?
+				rolesCT.at(i) = this->_playersVector.at(i).getPrimaryRoleCT() : rolesCT.at(i) = this->_playersVector.at(i).getSecondaryRoleCT();
 		}
 
 		return rolesCT;
 	}
 
-	std::vector<std::string> team::fillRolesTR()
+	std::vector<std::wstring> team::fillRolesTR()
 	{
-		std::vector<std::string> rolesTR{ 5 };
+		std::vector<std::wstring> rolesTR{ 5 };
 
 		for (int i = 0; i < this->_numberPlayers; i++)
 		{
-			std::find(rolesTR.begin(), rolesTR.end(), this->_playersVector.at(i).getPrimaryRoleTR()) == rolesTR.end() ? rolesTR.at(i) = this->_playersVector.at(i).getPrimaryRoleTR()
-				: rolesTR.at(i) = this->_playersVector.at(i).getSecondaryRoleTR();
+			std::find(rolesTR.begin(), rolesTR.end(), this->_playersVector.at(i).getPrimaryRoleTR()) == rolesTR.end() ?
+				rolesTR.at(i) = this->_playersVector.at(i).getPrimaryRoleTR() : rolesTR.at(i) = this->_playersVector.at(i).getSecondaryRoleTR();
 		}
 
 		return rolesTR;

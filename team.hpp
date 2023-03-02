@@ -12,7 +12,7 @@ namespace r3d
 
 		team();
 
-		team(std::wstring name, std::string country, std::string region, std::string creationDate, std::vector<r3d::player> players, r3d::coach coach);
+		team(std::wstring name, std::wstring country, std::wstring region, std::wstring creationDate, std::vector<r3d::player> players, r3d::coach coach);
 
 		team(std::vector<r3d::player> players);
 
@@ -29,30 +29,30 @@ namespace r3d
 		void showInformation();
 
 	private:
-		std::string playersDefineCountry();
+		std::wstring playersDefineCountry();
 
-		std::string countryDefineRegion();
+		std::wstring countryDefineRegion();
 
-		std::string determineInternationalTeamRegion();
+		std::wstring determineInternationalTeamRegion();
 
-		std::string createRandomFounding();
+		std::wstring createRandomFounding();
 
-		std::vector<std::string> fillRolesCT();
+		std::vector<std::wstring> fillRolesCT();
 
-		std::vector<std::string> fillRolesTR();
+		std::vector<std::wstring> fillRolesTR();
 
 		int avaiblePlayer(std::vector <r3d::player> possiblePlayers);
 
 		int avaibleCoach(std::vector <r3d::coach> possibleCoachs);
 
 		std::wstring _name;
-		std::string _country;
-		std::string _region;
-		std::string _creationDate;
+		std::wstring _country;
+		std::wstring _region;
+		std::wstring _creationDate;
 		std::size_t _numberPlayers;
 		std::vector<r3d::player> _playersVector;
 		r3d::coach _coach;
-		std::vector<std::string> _rolesCTFilled{ 5 };
-		std::vector<std::string> _rolesTRFilled{ 5 };
+		std::vector<std::wstring> _rolesCTFilled{ 5 };
+		std::vector<std::wstring> _rolesTRFilled{ 5 };
 	};
 }

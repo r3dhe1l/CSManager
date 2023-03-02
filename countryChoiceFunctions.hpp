@@ -8,341 +8,192 @@
 
 namespace r3d
 {
-	std::vector <std::string> teamsCreateCountriesVector(const std::size_t numCountries);
+	std::vector <int> playersGetCountriesByRankingRange(std::vector <int> sortedPlayerCountriesVector, int beginIndex, int endIndex,
+		std::vector <r3d::country::avaibleCountries> countriesToDraw, int tierPlayer);
 
-	std::vector <std::string> playersCreateCountriesVector(const std::size_t numCountries);
-
-	std::vector <std::string> playersGetCountriesByRankingRange(std::vector <std::string> sortedPlayerCountriesVector, std::size_t beginIndex, std::size_t endIndex,
-		std::vector <std::string> countriesToDraw, std::string tierPlayer);
-
-	std::vector <std::string> playersCountriesSortBySkillLevel(const std::size_t numPlayers);
+	std::vector <int> playersCountriesSortBySkillLevel(const int numPlayers);
 
 	std::vector <r3d::player> createPlayersVector(const std::size_t numTeams);
 
-	std::vector <std::string> coachGetCountriesByRankingRange(std::vector <std::string> sortedCoachCountriesVector, std::size_t beginIndex, std::size_t endIndex,
-		std::vector <std::string> countriesToDraw, std::string tierCoach);
+	std::vector <std::wstring> coachGetCountriesByRankingRange(std::vector <std::wstring> sortedCoachCountriesVector, std::size_t beginIndex, std::size_t endIndex,
+		std::vector <std::wstring> countriesToDraw, std::wstring tierCoach);
 
-	std::vector <std::string> coachsCountriesSortBySkillLevel(const std::size_t numCoachs);
+	std::vector <std::wstring> coachsCountriesSortBySkillLevel(const std::size_t numCoachs);
 
 	std::vector <r3d::coach> createCoachsVector(const std::size_t numTeams);
 
 	std::vector <r3d::team> createTeamsVector(const std::size_t numTeams);
 
-	const std::string* countryGetCulture(const std::string& country);
+	dasmig::ng::culture countryGetNGCulture(const r3d::country::avaibleCountries country);
 
-	const std::wstring* countryGetCode(const std::string& country);
+	r3d::country::avaibleRegions countryGetRegion(const r3d::country::avaibleCountries country);
+	
+	class country
+	{
+	public:
+		enum class avaibleCountries {
+			//players' countries in hltv top 30 world ranking
+			International,
+			Argentina,
+			Australia,
+			Brazil,
+			China,
+			Czech_Republic,
+			Denmark,
+			Finland,
+			France,
+			Germany,
+			Mongolia,
+			Poland,
+			Portugal,
+			Russia,
+			Sweden,
+			Turkey,
+			Ukraine,
+			United_Kingdom,
+			United_States,
+			Belgium,
+			Bosnia,
+			Bulgaria,
+			Canada,
+			Chile,
+			Estonia,
+			Hungary,
+			Israel,
+			Kazakhstan,
+			Kosovo,
+			Latvia,
+			Mexico,
+			Montenegro,
+			Netherlands,
+			New_Zealand,
+			Norway,
+			Romania,
+			Serbia,
+			Slovakia,
+			South_Africa,
+			Spain,
+			Switzerland,
+			Uruguay
+		};
 
-	const std::string* countryGetRegion(const std::string& country);
+		enum class avaibleRegions {
+			International,
+			Western_Europe,
+			Eastern_Europe,
+			CIS,
+			Americas,
+			Asia,
+			Oceania
+		};
 
-	static inline const std::vector <std::string> availableCountries = {
-		//players' countries in hltv top 30 world ranking
-		"International",
-		"Argentina",
-		"Australia",
-		"Brazil",
-		"China",
-		"Czech Republic",
-		"Denmark",
-		"Finland",
-		"France",
-		"Germany",
-		"Mongolia",
-		"Poland",
-		"Portugal",
-		"Russia",
-		"Sweden",
-		"Turkey",
-		"Ukraine",
-		"United Kingdom",
-		"United States",
-		"Belgium",
-		"Bosnia",
-		"Bulgaria",
-		"Canada",
-		"Chile",
-		"Estonia",
-		"Hungary",
-		"Israel",
-		"Kazakhstan",
-		"Kosovo",
-		"Latvia",
-		"Mexico",
-		"Montenegro",
-		"Netherlands",
-		"New Zealand",
-		"Norway",
-		"Romania",
-		"Serbia",
-		"Slovakia",
-		"South Africa",
-		"Spain",
-		"Switzerland",
-		"Uruguay",
-		"Country not found." };
+		std::map <r3d::country::avaibleCountries, float> playersCountryDistribution{
+			{Argentina, 0.0322},
+			{Australia, 0.0456},
+			{Brazil, 0.0972},
+			{China, 0.0231},
+			{Czech_Republic, 0.0186},
+			{Denmark, 0.0722},
+			{Finland, 0.0309},
+			{France, 0.0258},
+			{Germany, 0.0267},
+			{Mongolia, 0.0263},
+			{Poland, 0.0644},
+			{Portugal, 0.0276},
+			{Russia, 0.0733},
+			{Sweden, 0.0423},
+			{Turkey, 0.0204},
+			{Ukraine, 0.0332},
+			{United_Kingdom, 0.0267},
+			{United_States, 0.0782},
+			{Belgium, 0.0093},
+			{Bosnia, 0.0093},
+			{Bulgaria, 0.0111},
+			{Canada, 0.0166},
+			{Chile, 0.0093},
+			{Estonia, 0.0093},
+			{Hungary, 0.0093},
+			{Israel, 0.0093},
+			{Kazakhstan, 0.0137},
+			{Kosovo, 0.0101},
+			{Latvia, 0.0093},
+			{Mexico, 0.0093},
+			{Montenegro, 0.0093},
+			{Netherlands, 0.0093},
+			{New_Zealand, 0.0147},
+			{Norway, 0.0093},
+			{Romania, 0.0111},
+			{Serbia, 0.0101},
+			{Slovakia, 0.0111},
+			{South_Africa, 0.0128},
+			{Spain, 0.0137},
+			{Switzerland, 0.0093},
+			{Uruguay, 0.0093}
+		};
 
-	static inline const std::vector <std::string> availableCultures = {
-		"american",
-		"argentinian",
-		"australian",
-		"brazilian",
-		"british",
-		"bulgarian",
-		"canadian",
-		"chinese",
-		"czech", // I include this culture in relation to the namegenerator
-		"danish",
-		"finnish",
-		"french",
-		"german",
-		"kazakh",
-		"mexican",
-		"mongolian", // I include this culture in relation to the namegenerator
-		"norwegian",
-		"polish",
-		"portuguese",
-		"russian",
-		"spanish",
-		"swedish",
-		"turkish",
-		"ukrainian",
-		"international" };
+		std::map <r3d::country::avaibleCountries, float> coachsCountryDistribution{
+			{Argentina, 0.028},
+			{Australia, 0.042},
+			{Brazil, 0.109},
+			{China, 0.020},
+			{Czech_Republic, 0.020},
+			{Denmark, 0.086},
+			{Finland, 0.029},
+			{France, 0.030},
+			{Germany, 0.029},
+			{Mongolia, 0.023},
+			{Poland, 0.064},
+			{Portugal, 0.023},
+			{Russia, 0.085},
+			{Sweden, 0.048},
+			{Turkey, 0.020},
+			{Ukraine, 0.035},
+			{United_Kingdom, 0.023},
+			{United_States, 0.088},
+			{Belgium, 0.010},
+			{Bosnia, 0.011},
+			{Bulgaria, 0.011},
+			{Canada, 0.015},
+			{Chile, 0.010},
+			{Estonia, 0.011},
+			{Hungary, 0.011},
+			{Israel, 0.011},
+			{Kazakhstan, 0.015},
+			{Kosovo, 0.010},
+			{Latvia, 0.011},
+			{Mexico, 0.010},
+			{Montenegro, 0.011},
+			{Netherlands, 0.010},
+			{New_Zealand, 0.010},
+			{Norway, 0.011},
+			{Romania, 0.011},
+			{Serbia, 0.011},
+			{Slovakia, 0.011},
+			{South_Africa, 0.010},
+			{Spain, 0.011},
+			{Switzerland, 0.010},
+			{Uruguay, 0.010}
+		};
 
-	static inline const std::map <std::string, std::string> countryToCulture{
-		{availableCountries.at(0), availableCultures.at(24)},
-		{availableCountries.at(1), availableCultures.at(1)},
-		{availableCountries.at(2), availableCultures.at(2)},
-		{availableCountries.at(3), availableCultures.at(3)},
-		{availableCountries.at(4), availableCultures.at(7)},
-		{availableCountries.at(5), availableCultures.at(17)}, //Czech Republic - polish
-		{availableCountries.at(6), availableCultures.at(9)},
-		{availableCountries.at(7), availableCultures.at(10)},
-		{availableCountries.at(8), availableCultures.at(11)},
-		{availableCountries.at(9), availableCultures.at(12)},
-		{availableCountries.at(10), availableCultures.at(22)}, //Mongolia - turkish
-		{availableCountries.at(11), availableCultures.at(17)},
-		{availableCountries.at(12), availableCultures.at(18)},
-		{availableCountries.at(13), availableCultures.at(19)},
-		{availableCountries.at(14), availableCultures.at(21)},
-		{availableCountries.at(15), availableCultures.at(22)},
-		{availableCountries.at(16), availableCultures.at(23)},
-		{availableCountries.at(17), availableCultures.at(4)},
-		{availableCountries.at(18), availableCultures.at(0)},
-		{availableCountries.at(19), availableCultures.at(11)},// Belgium - french
-		{availableCountries.at(20), availableCultures.at(22)},// Bosnia - turkish
-		{availableCountries.at(21), availableCultures.at(5)},
-		{availableCountries.at(22), availableCultures.at(6)},
-		{availableCountries.at(23), availableCultures.at(1)},// Chile - argentinian
-		{availableCountries.at(24), availableCultures.at(19)},//Estonia - russian
-		{availableCountries.at(25), availableCultures.at(17)},//Hungary - polish (czech)
-		{availableCountries.at(26), availableCultures.at(19)},//Israel - russian
-		{availableCountries.at(27), availableCultures.at(13)},
-		{availableCountries.at(28), availableCultures.at(22)},//Kosovo - turkish
-		{availableCountries.at(29), availableCultures.at(19)},//Latvia - russian
-		{availableCountries.at(30), availableCultures.at(14)},
-		{availableCountries.at(31), availableCultures.at(5)},//Montenegro - bulgarian
-		{availableCountries.at(32), availableCultures.at(12)},//Netherlands - german
-		{availableCountries.at(33), availableCultures.at(2)},//New Zealand - australian
-		{availableCountries.at(34), availableCultures.at(16)},
-		{availableCountries.at(35), availableCultures.at(5)},//Romania - bulgarian
-		{availableCountries.at(36), availableCultures.at(5)},//Serbia - bulgarian
-		{availableCountries.at(37), availableCultures.at(17)},//Slovakia - polish (czech)
-		{availableCountries.at(38), availableCultures.at(0)},//South Africa - american
-		{availableCountries.at(39), availableCultures.at(20)},
-		{availableCountries.at(40), availableCultures.at(12)},//Switzerland - german
-		{availableCountries.at(41), availableCultures.at(1)} };//Uruguay - argentinian
-
-	static inline const std::map <std::string, std::wstring> countryToCode{
-		{availableCountries.at(0), L"Country not found."},
-		{availableCountries.at(1), L"ar"},
-		{availableCountries.at(2), L"au"},
-		{availableCountries.at(3), L"br"},
-		{availableCountries.at(4), L"cn"},
-		{availableCountries.at(5), L"pl"}, //Czech Republic - polish
-		{availableCountries.at(6), L"dk"},
-		{availableCountries.at(7), L"fi"},
-		{availableCountries.at(8), L"fr"},
-		{availableCountries.at(9), L"de"},
-		{availableCountries.at(10), L"tr"}, //Mongolia - turkish
-		{availableCountries.at(11), L"pl"},
-		{availableCountries.at(12), L"pt"},
-		{availableCountries.at(13), L"ru"},
-		{availableCountries.at(14), L"se"},
-		{availableCountries.at(15), L"tr"},
-		{availableCountries.at(16), L"ua"},
-		{availableCountries.at(17), L"bg"},
-		{availableCountries.at(18), L"us"},
-		{availableCountries.at(19), L"fr"},// Belgium - french
-		{availableCountries.at(20), L"tr"},// Bosnia - turkish
-		{availableCountries.at(21), L"bg"},
-		{availableCountries.at(22), L"ca"},
-		{availableCountries.at(23), L"ar"},// Chile - argentinian
-		{availableCountries.at(24), L"ru"},//Estonia - russian
-		{availableCountries.at(25), L"pl"},//Hungary - polish (czech)
-		{availableCountries.at(26), L"ru"},//Israel - russian
-		{availableCountries.at(27), L"kz"},
-		{availableCountries.at(28), L"tr"},//Kosovo - turkish
-		{availableCountries.at(29), L"ru"},//Latvia - russian
-		{availableCountries.at(30), L"mx"},
-		{availableCountries.at(31), L"bg"},//Montenegro - bulgarian
-		{availableCountries.at(32), L"de"},//Netherlands - german
-		{availableCountries.at(33), L"au"},//New Zealand - australian
-		{availableCountries.at(34), L"no"},
-		{availableCountries.at(35), L"bg"},//Romania - bulgarian
-		{availableCountries.at(36), L"bg"},//Serbia - bulgarian
-		{availableCountries.at(37), L"pl"},//Slovakia - polish (czech)
-		{availableCountries.at(38), L"us"},//South Africa - american
-		{availableCountries.at(39), L"es"},
-		{availableCountries.at(40), L"de"},//Switzerland - german
-		{availableCountries.at(41), L"ar"} };//Uruguay - argentinian
-
-	static inline const std::map <std::string, std::string> countryToRegion{
-		{availableCountries.at(0), "International"},
-		{availableCountries.at(1), "Americas"},
-		{availableCountries.at(2), "Oceania"},
-		{availableCountries.at(3), "Americas"},
-		{availableCountries.at(4), "Asia"},
-		{availableCountries.at(5), "Europe"},
-		{availableCountries.at(6), "Europe"},
-		{availableCountries.at(7), "Europe"},
-		{availableCountries.at(8), "Europe"},
-		{availableCountries.at(9), "Europe"},
-		{availableCountries.at(10), "Asia"},
-		{availableCountries.at(11), "Europe"},
-		{availableCountries.at(12), "Europe"},
-		{availableCountries.at(13), "CIS"},
-		{availableCountries.at(14), "Europe"},
-		{availableCountries.at(15), "Europe"},
-		{availableCountries.at(16), "CIS"},
-		{availableCountries.at(17), "Europe"},
-		{availableCountries.at(18), "Americas"},
-		{availableCountries.at(19), "Europe"},// Belgium - french
-		{availableCountries.at(20), "Europe"},// Bosnia - turkish
-		{availableCountries.at(21), "Europe"},
-		{availableCountries.at(22), "Americas"},
-		{availableCountries.at(23), "Americas"},// Chile - argentinian
-		{availableCountries.at(24), "Europe"},//Estonia - russian
-		{availableCountries.at(25), "Europe"},//Hungary - czech
-		{availableCountries.at(26), "Europe"},//Israel - russian
-		{availableCountries.at(27), "CIS"},
-		{availableCountries.at(28), "Europe"},//Kosovo - turkish
-		{availableCountries.at(29), "Europe"},//Latvia - russian
-		{availableCountries.at(30), "Americas"},
-		{availableCountries.at(31), "Europe"},//Montenegro - bulgarian
-		{availableCountries.at(32), "Europe"},//Netherlands - german
-		{availableCountries.at(33), "Oceania"},//New Zealand - australian
-		{availableCountries.at(34), "Europe"},
-		{availableCountries.at(35), "Europe"},//Romania - bulgarian
-		{availableCountries.at(36), "Europe"},//Serbia - bulgarian
-		{availableCountries.at(37), "Europe"},//Slovakia - czech
-		{availableCountries.at(38), "Americas"},//South Africa - american
-		{availableCountries.at(39), "Europe"},
-		{availableCountries.at(40), "Europe"},//Switzerland - german
-		{availableCountries.at(41), "Americas"} };//Uruguay - argentinian
-
-	static inline const std::map <std::string, float> teamsCountryDistribution{
-		{availableCountries.at(0), 0.082},
-		{availableCountries.at(1), 0.04},
-		{availableCountries.at(2), 0.064},
-		{availableCountries.at(3), 0.174},
-		{availableCountries.at(4), 0.02},
-		{availableCountries.at(5), 0.019},
-		{availableCountries.at(6), 0.064},
-		{availableCountries.at(7), 0.031},
-		{availableCountries.at(8), 0.02},
-		{availableCountries.at(9), 0.029},
-		{availableCountries.at(10), 0.029},
-		{availableCountries.at(11), 0.07},
-		{availableCountries.at(12), 0.029},
-		{availableCountries.at(13), 0.094},
-		{availableCountries.at(14), 0.044},
-		{availableCountries.at(15), 0.019},
-		{availableCountries.at(16), 0.044},
-		{availableCountries.at(17), 0.04},
-		{availableCountries.at(18), 0.114} };
-
-	static inline const std::map <std::string, float> playersCountryDistribution{
-		{availableCountries.at(1), 0.0322},
-		{availableCountries.at(2), 0.0456},
-		{availableCountries.at(3), 0.0972},
-		{availableCountries.at(4), 0.0231},
-		{availableCountries.at(5), 0.0186},
-		{availableCountries.at(6), 0.0722},
-		{availableCountries.at(7), 0.0309},
-		{availableCountries.at(8), 0.0258},
-		{availableCountries.at(9), 0.0267},
-		{availableCountries.at(10), 0.0263},
-		{availableCountries.at(11), 0.0644},
-		{availableCountries.at(12), 0.0276},
-		{availableCountries.at(13), 0.0733},
-		{availableCountries.at(14), 0.0423},
-		{availableCountries.at(15), 0.0204},
-		{availableCountries.at(16), 0.0332},
-		{availableCountries.at(17), 0.0267},
-		{availableCountries.at(18), 0.0782},
-		{availableCountries.at(19), 0.0093},
-		{availableCountries.at(20), 0.0093},
-		{availableCountries.at(21), 0.0111},
-		{availableCountries.at(22), 0.0166},
-		{availableCountries.at(23), 0.0093},
-		{availableCountries.at(24), 0.0093},
-		{availableCountries.at(25), 0.0093},
-		{availableCountries.at(26), 0.0093},
-		{availableCountries.at(27), 0.0137},
-		{availableCountries.at(28), 0.0101},
-		{availableCountries.at(29), 0.0093},
-		{availableCountries.at(30), 0.0093},
-		{availableCountries.at(31), 0.0093},
-		{availableCountries.at(32), 0.0093},
-		{availableCountries.at(33), 0.0147},
-		{availableCountries.at(34), 0.0093},
-		{availableCountries.at(35), 0.0111},
-		{availableCountries.at(36), 0.0101},
-		{availableCountries.at(37), 0.0111},
-		{availableCountries.at(38), 0.0128},
-		{availableCountries.at(39), 0.0137},
-		{availableCountries.at(40), 0.0093},
-		{availableCountries.at(41), 0.0093}, };
-
-	static inline const std::map <std::string, float> coachCountryDistribution{
-		{availableCountries.at(1), 0.028},
-		{availableCountries.at(2), 0.042},
-		{availableCountries.at(3), 0.109},
-		{availableCountries.at(4), 0.02},
-		{availableCountries.at(5), 0.02},
-		{availableCountries.at(6), 0.086},
-		{availableCountries.at(7), 0.029},
-		{availableCountries.at(8), 0.03},
-		{availableCountries.at(9), 0.029},
-		{availableCountries.at(10), 0.023},
-		{availableCountries.at(11), 0.064},
-		{availableCountries.at(12), 0.023},
-		{availableCountries.at(13), 0.085},
-		{availableCountries.at(14), 0.048},
-		{availableCountries.at(15), 0.02},
-		{availableCountries.at(16), 0.035},
-		{availableCountries.at(17), 0.023},
-		{availableCountries.at(18), 0.088},
-		{availableCountries.at(19), 0.01},
-		{availableCountries.at(20), 0.011},
-		{availableCountries.at(21), 0.011},
-		{availableCountries.at(22), 0.015},
-		{availableCountries.at(23), 0.01},
-		{availableCountries.at(24), 0.011},
-		{availableCountries.at(25), 0.011},
-		{availableCountries.at(26), 0.011},
-		{availableCountries.at(27), 0.015},
-		{availableCountries.at(28), 0.01},
-		{availableCountries.at(29), 0.011},
-		{availableCountries.at(30), 0.01},
-		{availableCountries.at(31), 0.011},
-		{availableCountries.at(32), 0.01},
-		{availableCountries.at(33), 0.01},
-		{availableCountries.at(34), 0.011},
-		{availableCountries.at(35), 0.011},
-		{availableCountries.at(36), 0.011},
-		{availableCountries.at(37), 0.011},
-		{availableCountries.at(38), 0.01},
-		{availableCountries.at(39), 0.011},
-		{availableCountries.at(40), 0.01},
-		{availableCountries.at(41), 0.01}, };
+		//static inline const std::map <std::wstring, float> teamsCountryDistribution{
+		//	{availableCountries.at(0), 0.082},
+		//	{availableCountries.at(1), 0.04},
+		//	{availableCountries.at(2), 0.064},
+		//	{availableCountries.at(3), 0.174},
+		//	{availableCountries.at(4), 0.02},
+		//	{availableCountries.at(5), 0.019},
+		//	{availableCountries.at(6), 0.064},
+		//	{availableCountries.at(7), 0.031},
+		//	{availableCountries.at(8), 0.02},
+		//	{availableCountries.at(9), 0.029},
+		//	{availableCountries.at(10), 0.029},
+		//	{availableCountries.at(11), 0.07},
+		//	{availableCountries.at(12), 0.029},
+		//	{availableCountries.at(13), 0.094},
+		//	{availableCountries.at(14), 0.044},
+		//	{availableCountries.at(15), 0.019},
+		//	{availableCountries.at(16), 0.044},
+		//	{availableCountries.at(17), 0.04},
+		//	{availableCountries.at(18), 0.114} };
+	};
 }

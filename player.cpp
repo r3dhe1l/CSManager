@@ -1,40 +1,37 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "D:/a_cursos/projetos_CPP/CSManager/thirdParty/randomLibrary/random.hpp"
+#include "random.hpp"
+#include "magic_enum.hpp"
 #include "D:/a_cursos/projetos_CPP/CSManager/thirdParty/nameGenerator/dasmig/namegen.hpp"
 #include "D:/a_cursos/projetos_CPP/CSManager/thirdParty/nicknameGenerator/dasmig/nicknamegen.hpp"
+#include "magic_enum.hpp"
 #include "countryChoiceFunctions.hpp"
 #include "player.hpp"
 
 namespace r3d
 {
-	player::player()
-	{
-		this->_gender = 'x';
-		this->_age = 0;
-		this->_skillLevel = 0;
-	}
+	player::player() {}
 
-	player::player(std::wstring name, std::wstring nickname, std::string nationality, std::string born, std::string primaryRoleCT, std::string primaryRoleTR,
-		std::string secondaryRoleCT, std::string secondaryRoleTR, char gender, std::uint16_t skillLevel, std::string currentDate)
-		: _name(name), _nickname(nickname), _nationality(nationality), _born(born), _primaryRoleCT(primaryRoleCT), _primaryRoleTR(primaryRoleTR), _secondaryRoleCT(secondaryRoleCT),
-		_secondaryRoleTR(secondaryRoleTR), _gender(gender), _age(setAge(currentDate)), _skillLevel(skillLevel)
+	player::player(std::wstring name, std::wstring nickname, r3d::country::avaibleCountries nationality, std::wstring born, r3d::rolesCT primaryRoleCT, r3d::rolesTR primaryRoleTR,
+		r3d::rolesCT secondaryRoleCT, r3d::rolesTR secondaryRoleTR, dasmig::ng::gender gender, std::uint8_t skillLevel, std::wstring currentDate)
+		: _name(name), _nickname(nickname), _nationality(nationality), _born(born), _primaryRoleCT(primaryRoleCT), _primaryRoleTR(primaryRoleTR),
+		_secondaryRoleCT(secondaryRoleCT), _secondaryRoleTR(secondaryRoleTR), _gender(gender), _age(setAge(currentDate)), _skillLevel(skillLevel)
 	{}
 
-	player::player(std::string country, char gender)
-		: _name(createRandomName(country, gender)), _nickname(createRandomNick(this->_name)), _nationality(country), _born(createRandomBorn()), _primaryRoleCT(chooseRandomPrimaryRoleCT()),
-		_primaryRoleTR(chooseRandomPrimaryRoleTR()), _secondaryRoleCT(chooseRandomSecondaryRoleCT()), _secondaryRoleTR(chooseRandomSecondaryRoleTR()), _gender(gender),
-		_age(setAge("12/02/2023")), _skillLevel(createRandomSkillLevel())
+	player::player(r3d::country::avaibleCountries country, dasmig::ng::gender gender)
+		: _name(createRandomName(country, gender)), _nickname(createRandomNick(this->_name)), _nationality(country), _born(createRandomBorn()),
+		_primaryRoleCT(chooseRandomPrimaryRoleCT()), _primaryRoleTR(chooseRandomPrimaryRoleTR()), _secondaryRoleCT(chooseRandomSecondaryRoleCT()),
+		_secondaryRoleTR(chooseRandomSecondaryRoleTR()), _gender(gender), _age(setAge(L"12/02/2023")), _skillLevel(createRandomSkillLevel())
 	{}
 
-	player::player(std::string country, char tierLettre, char gender)
-		: _name(createRandomName(country, gender)), _nickname(createRandomNick(this->_name)), _nationality(country), _born(createRandomBorn()), _primaryRoleCT(chooseRandomPrimaryRoleCT()),
-		_primaryRoleTR(chooseRandomPrimaryRoleTR()), _secondaryRoleCT(chooseRandomSecondaryRoleCT()), _secondaryRoleTR(chooseRandomSecondaryRoleTR()), _gender(gender),
-		_age(setAge("12/02/2023")), _skillLevel(createRandomSkillLevelByTier(tierLettre))
+	player::player(r3d::country::avaibleCountries country, int tier, dasmig::ng::gender gender)
+		: _name(createRandomName(country, gender)), _nickname(createRandomNick(this->_name)), _nationality(country), _born(createRandomBorn()),
+		_primaryRoleCT(chooseRandomPrimaryRoleCT()), _primaryRoleTR(chooseRandomPrimaryRoleTR()), _secondaryRoleCT(chooseRandomSecondaryRoleCT()),
+		_secondaryRoleTR(chooseRandomSecondaryRoleTR()), _gender(gender), _age(setAge(L"12/02/2023")), _skillLevel(createRandomSkillLevelByTier(tier))
 	{}
 
-	std::uint16_t player::setAge(std::string currentDate)
+	std::uint8_t player::setAge(std::wstring currentDate)
 	{
 		int currentDay = stoi(currentDate.substr(0, 2));
 		int currentMonth = stoi(currentDate.substr(3, 2));
@@ -58,62 +55,60 @@ namespace r3d
 		return currentYear - bornYear;
 	}
 
-	std::string player::getNationality()
+	r3d::country::avaibleCountries player::getNationality()
 	{
 		return this->_nationality;
 	}
 
-	std::string player::getPrimaryRoleCT()
+	r3d::rolesCT player::getPrimaryRoleCT()
 	{
 		return this->_primaryRoleCT;
 	}
 
-	std::string player::getPrimaryRoleTR()
+	r3d::rolesTR player::getPrimaryRoleTR()
 	{
 		return this->_primaryRoleTR;
 	}
 
-	std::string player::getSecondaryRoleCT()
+	r3d::rolesCT player::getSecondaryRoleCT()
 	{
 		return this->_secondaryRoleCT;
 	}
 
-	std::string player::getSecondaryRoleTR()
+	r3d::rolesTR player::getSecondaryRoleTR()
 	{
 		return this->_secondaryRoleTR;
 	}
 
-	std::uint16_t player::getSkillLevel()
+	std::uint8_t player::getSkillLevel()
 	{
 		return this->_skillLevel;
 	}
 
 	void player::showInformation()
 	{
-		std::wcout << "Nome do Jogador é " << this->_name << "\nNickname do jogador é " << this->_nickname << "\nNacionalidade é " << this->_nationality.c_str() <<
-			"\nNasceu em " << this->_born.c_str() << "\nJoga de CT como " << this->_primaryRoleCT.c_str() << "\nJOga de TR como " << this->_primaryRoleTR.c_str() << "\nSexo " <<
-			this->_gender << "\nCom skill level de " << this->_skillLevel << "\nE tem " << this->_age << " anos\n";
+		std::wcout << L"Nome do Jogador é " << this->_name << L"\nNickname do jogador é " << this->_nickname << L"\nNacionalidade é " << this->_nationality <<
+			L"\nNasceu em " << this->_born << L"\nJoga de CT como " << this->_primaryRoleCT << L"\nJOga de TR como " << this->_primaryRoleTR << L"\nSexo " <<
+			this->_gender << L"\nCom skill level de " << this->_skillLevel << L"\nE tem " << this->_age << L" anos\n";
 	}
 
-	std::wstring player::createRandomName(std::string& country, char& gender)
+	std::wstring player::createRandomName(r3d::country::avaibleCountries& country, dasmig::ng::gender& gender)
 	{
 		int random = effolkronium::random_thread_local::get<int>(1, 30);
-		std::wstring wGender;
-		wGender = gender;
 
 		switch (random)
 		{
 		case 10:
-			return dasmig::ng::instance().get_name(dasmig::ng::to_gender(wGender), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_name().append_surname();
+			return dasmig::ng::instance().get_name(gender, r3d::countryGetNGCulture(country)).append_name().append_surname();
 		case 20:
-			return dasmig::ng::instance().get_name(dasmig::ng::to_gender(wGender), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_surname().append_surname();
+			return dasmig::ng::instance().get_name(gender, r3d::countryGetNGCulture(country)).append_surname().append_surname();
 		case 30:
-			return dasmig::ng::instance().get_name(dasmig::ng::to_gender(wGender), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_name().append_surname().append_surname();
+			return dasmig::ng::instance().get_name(gender, r3d::countryGetNGCulture(country)).append_name().append_surname().append_surname();
 		default:
 			break;
 		}
 
-		return dasmig::ng::instance().get_name(dasmig::ng::to_gender(wGender), dasmig::ng::to_culture(*r3d::countryGetCode(country))).append_surname();
+		return dasmig::ng::instance().get_name(gender, r3d::countryGetNGCulture(country)).append_surname();
 	}
 
 	std::wstring player::createRandomNick(std::wstring& name)
@@ -121,7 +116,7 @@ namespace r3d
 		return dasmig::nng::instance().get_nickname(name);
 	}
 
-	std::string player::createRandomBorn()
+	std::wstring player::createRandomBorn()
 	{
 		int year, month, day = 0;
 		year = effolkronium::random_thread_local::get<int>(1990, 2006);
@@ -156,88 +151,88 @@ namespace r3d
 			break;
 		}
 
-		std::string dayString, monthString;
+		std::wstring dayString, monthString;
 
-		day > 9 ? (dayString = std::to_string(day)) : dayString = "0" + std::to_string(day);
-		month > 9 ? (monthString = std::to_string(month)) : monthString = "0" + std::to_string(month);
+		day > 9 ? (dayString = std::to_wstring(day)) : dayString = L"0" + std::to_wstring(day);
+		month > 9 ? (monthString = std::to_wstring(month)) : monthString = L"0" + std::to_wstring(month);
 
-		return dayString + "/" + monthString + "/" + std::to_string(year);
+		return dayString + L"/" + monthString + L"/" + std::to_wstring(year);
 	}
 
-	std::string player::chooseRandomPrimaryRoleCT()
+	r3d::rolesCT player::chooseRandomPrimaryRoleCT()
 	{
-		std::string roles[] = { "mid", "rotator", "anchor A", "anchor B", "joker" };
+		int randomRole = effolkronium::random_thread_local::get<int>(0, 4);
 
-		return roles[effolkronium::random_thread_local::get<int>(0, 4)];
+		return magic_enum::enum_cast<r3d::rolesCT>(randomRole).value();
 	}
 
-	std::string player::chooseRandomPrimaryRoleTR()
+	r3d::rolesTR player::chooseRandomPrimaryRoleTR()
 	{
-		std::string roles[] = { "entry", "support", "lurker", "trader", "joker" };
+		int randomRole = effolkronium::random_thread_local::get<int>(0, 4);
 
-		return roles[effolkronium::random_thread_local::get<int>(0, 4)];
+		return magic_enum::enum_cast<r3d::rolesTR>(randomRole).value();
 	}
 
-	std::string player::chooseRandomSecondaryRoleCT()
+	r3d::rolesCT player::chooseRandomSecondaryRoleCT()
 	{
-		std::string roles[] = { "mid", "rotator", "anchor A", "anchor B", "joker" };
-		std::string role = "";
+		int randomRole;
+
 		do
 		{
-			role = roles[effolkronium::random_thread_local::get<int>(0, 4)];
+			int randomRole = effolkronium::random_thread_local::get<int>(0, 4);
 
-		} while (role == this->_primaryRoleCT);
+		} while (randomRole == magic_enum::enum_integer(this->_primaryRoleCT));
 
-		return role;
+		return magic_enum::enum_cast<r3d::rolesCT>(randomRole).value();
 	}
 
-	std::string player::chooseRandomSecondaryRoleTR()
+	r3d::rolesTR player::chooseRandomSecondaryRoleTR()
 	{
-		std::string roles[] = { "entry", "support", "lurker", "trader", "joker" };
-		std::string role = "";
+		int randomRole;
+
 		do
 		{
-			role = roles[effolkronium::random_thread_local::get<int>(0, 4)];
+			randomRole = effolkronium::random_thread_local::get<int>(0, 4);
 
-		} while (role == this->_primaryRoleTR);
+		} while (randomRole == magic_enum::enum_integer(this->_primaryRoleTR));
 
-		return role;
+		return magic_enum::enum_cast<r3d::rolesTR>(randomRole).value();
 	}
 
-	std::uint16_t player::createRandomSkillLevel()
+	std::uint8_t player::createRandomSkillLevel()
 	{
 		return effolkronium::random_thread_local::get<int>(55, 100);
 	}
 
-	std::uint16_t player::createRandomSkillLevelByTier(char tierLettre)
+	std::uint8_t player::createRandomSkillLevelByTier(int tier)
 	{
-		switch (tierLettre)
+		switch (tier)
 		{
-		case 'A':
+		case 100:
 			return effolkronium::random_thread_local::get<int>(95, 100);
 
-		case 'B':
+		case 200:
 			return effolkronium::random_thread_local::get<int>(92, 96);
 
-		case 'C':
+		case 300:
 			return effolkronium::random_thread_local::get<int>(89, 93);
 
-		case 'D':
+		case 400:
 			return effolkronium::random_thread_local::get<int>(85, 90);
 
-		case 'E':
+		case 500:
 			return effolkronium::random_thread_local::get<int>(82, 87);
 
-		case 'F':
+		case 600:
 			return effolkronium::random_thread_local::get<int>(78, 84);
 
-		case 'G':
+		case 700:
 			return effolkronium::random_thread_local::get<int>(69, 80);
 
-		case 'H':
+		case 800:
 			return effolkronium::random_thread_local::get<int>(64, 72);
 
-		case 'I':
+		case 900:
 			return effolkronium::random_thread_local::get<int>(55, 67);
 
 		}

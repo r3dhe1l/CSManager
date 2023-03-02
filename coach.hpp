@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include "countryChoiceFunctions.hpp"
 
 
 namespace r3d
@@ -13,39 +14,40 @@ namespace r3d
 
 		coach();
 
-		coach(std::wstring name, std::wstring nickname, std::string nationality, std::string born, char gender, std::uint16_t rating, std::string currentDate);
+		coach(std::wstring name, std::wstring nickname, r3d::country::avaibleCountries nationality, std::wstring born, dasmig::ng::gender gender, std::uint8_t rating,
+			std::wstring currentDate);
 
-		coach(std::string country, char gender);
+		coach(r3d::country::avaibleCountries country, dasmig::ng::gender gender);
 
-		coach(std::string country, char tierLettre, char gender);
+		coach(r3d::country::avaibleCountries country, int tier, dasmig::ng::gender gender);
 
-		std::uint16_t setAge(std::string currentDate);
+		std::uint8_t setAge(std::wstring currentDate);
 
 		std::wstring getName();
 
-		std::uint16_t getRating();
+		std::uint8_t getRating();
 
-		std::string getNationality();
+		r3d::country::avaibleCountries getNationality();
 
 		void showInformation();
 
 	private:
-		std::wstring createRandomName(std::string& country, char& gender);
+		std::wstring createRandomName(r3d::country::avaibleCountries& country, dasmig::ng::gender& gender);
 
 		std::wstring createRandomNick(std::wstring& name);
 
-		std::string createRandomBorn();
+		std::wstring createRandomBorn();
 
-		std::uint16_t createRandomRating();
+		std::uint8_t createRandomRating();
 
-		std::uint16_t createRandomRatingByTier(char tierLettre);
+		std::uint8_t createRandomRatingByTier(int tier);
 
 		std::wstring _name;
 		std::wstring _nickname;
-		std::string _nationality;
-		std::string _born;
-		char _gender;
-		std::uint16_t _age;
-		std::uint16_t _rating;
+		r3d::country::avaibleCountries _nationality;
+		std::wstring _born;
+		dasmig::ng::gender _gender;
+		std::uint8_t _age;
+		std::uint8_t _rating;
 	};
 }
