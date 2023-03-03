@@ -58,22 +58,22 @@ namespace r3d
 		return this->_nationality;
 	}
 
-	role::role::rolesCT player::getPrimaryRoleCT()
+	role::rolesCT player::getPrimaryRoleCT()
 	{
 		return this->_primaryRoleCT;
 	}
 
-	role::role::rolesTR player::getPrimaryRoleTR()
+	role::rolesTR player::getPrimaryRoleTR()
 	{
 		return this->_primaryRoleTR;
 	}
 
-	role::role::rolesCT player::getSecondaryRoleCT()
+	role::rolesCT player::getSecondaryRoleCT()
 	{
 		return this->_secondaryRoleCT;
 	}
 
-	role::role::rolesTR player::getSecondaryRoleTR()
+	role::rolesTR player::getSecondaryRoleTR()
 	{
 		return this->_secondaryRoleTR;
 	}
@@ -85,7 +85,6 @@ namespace r3d
 
 	void player::showInformation()
 	{
-		// TODO
 		//std::wcout << L"Nome do Jogador é " << this->_name << L"\nNickname do jogador é " << this->_nickname << L"\nNacionalidade é " << this->_nationality <<
 		//	L"\nNasceu em " << this->_born << L"\nJoga de CT como " << this->_primaryRoleCT << L"\nJOga de TR como " << this->_primaryRoleTR << L"\nSexo " <<
 		//	this->_gender << L"\nCom skill level de " << this->_skillLevel << L"\nE tem " << this->_age << L" anos\n";
