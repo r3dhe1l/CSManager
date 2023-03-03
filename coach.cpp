@@ -1,28 +1,26 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include "D:/a_cursos/projetos_CPP/CSManager/thirdParty/randomLibrary/random.hpp"
-#include "D:/a_cursos/projetos_CPP/CSManager/thirdParty/nameGenerator/dasmig/namegen.hpp"
-#include "D:/a_cursos/projetos_CPP/CSManager/thirdParty/nicknameGenerator/dasmig/nicknamegen.hpp"
-#include "countryChoiceFunctions.hpp"
 #include "coach.hpp"
-
+#include "random.hpp"
+#include "magic_enum.hpp"
+#include "thirdParty/nicknameGenerator/dasmig/nicknamegen.hpp"
+#include "countryChoiceFunctions.hpp"
 
 namespace r3d
 {
-	coach::coach() {}
+	coach::coach()
+		: _age(10), _gender(dasmig::ng::gender::m), _nationality(country::availableCountries::Brazil), _rating(100)
+	{}
 
-	coach::coach(std::wstring name, std::wstring nickname, r3d::country::avaibleCountries nationality, std::wstring born, dasmig::ng::gender gender, std::uint8_t rating,
+	coach::coach(std::wstring name, std::wstring nickname, country::availableCountries nationality, std::wstring born, dasmig::ng::gender gender, std::uint8_t rating,
 		std::wstring currentDate)
 		: _name(name), _nickname(nickname), _nationality(nationality), _born(born), _gender(gender), _age(setAge(currentDate)), _rating(rating)
 	{}
 
-	coach::coach(r3d::country::avaibleCountries country, dasmig::ng::gender gender)
+	coach::coach(country::availableCountries country, dasmig::ng::gender gender)
 		: _name(createRandomName(country, gender)), _nickname(createRandomNick(this->_name)), _nationality(country), _born(createRandomBorn()), _gender(gender),
 		_age(setAge(L"07/02/2023")), _rating(createRandomRating())
 	{}
 
-	coach::coach(r3d::country::avaibleCountries country, int tier, dasmig::ng::gender gender)
+	coach::coach(country::availableCountries country, int tier, dasmig::ng::gender gender)
 		: _name(createRandomName(country, gender)), _nickname(createRandomNick(this->_name)), _nationality(country), _born(createRandomBorn()), _gender(gender),
 		_age(setAge(L"09/02/2023")), _rating(createRandomRatingByTier(tier))
 	{}
@@ -61,34 +59,34 @@ namespace r3d
 		return this->_rating;
 	}
 
-	r3d::country::avaibleCountries coach::getNationality()
+	country::availableCountries coach::getNationality()
 	{
 		return this->_nationality;
 	}
 
 	void coach::showInformation()
 	{
-		std::wcout << L"Nome do treinador é " << this->_name << L"\nNickname do treinador é " << this->_nickname << L"\nNacionalidade é " << this->_nationality <<
-			L"\nNasceu em " << this->_born << L"\nSexo " << this->_gender << L"\nCom rating de " << this->_rating << L"\nE tem " << this->_age << L" anos\n";
+		//std::wcout << L"Nome do treinador é " << this->_name << L"\nNickname do treinador é " << this->_nickname << L"\nNacionalidade é " << this->_nationality <<
+			//L"\nNasceu em " << this->_born << L"\nSexo " << this->_gender << L"\nCom rating de " << this->_rating << L"\nE tem " << this->_age << L" anos\n";
 	}
 
-	std::wstring coach::createRandomName(r3d::country::avaibleCountries& country, dasmig::ng::gender& gender)
+	std::wstring coach::createRandomName(country::availableCountries& country, dasmig::ng::gender& gender)
 	{
 		int random = effolkronium::random_thread_local::get<int>(1, 30);
 
 		switch (random)
 		{
 		case 10:
-			return dasmig::ng::instance().get_name(gender, r3d::countryGetNGCulture(country)).append_name().append_surname();
+			return dasmig::ng::instance().get_name(gender, countryGetNGCulture(country)).append_name().append_surname();
 		case 20:
-			return dasmig::ng::instance().get_name(gender, r3d::countryGetNGCulture(country)).append_surname().append_surname();
+			return dasmig::ng::instance().get_name(gender, countryGetNGCulture(country)).append_surname().append_surname();
 		case 30:
-			return dasmig::ng::instance().get_name(gender, r3d::countryGetNGCulture(country)).append_name().append_surname().append_surname();
+			return dasmig::ng::instance().get_name(gender, countryGetNGCulture(country)).append_name().append_surname().append_surname();
 		default:
 			break;
 		}
 
-		return dasmig::ng::instance().get_name(gender, r3d::countryGetNGCulture(country))).append_surname();
+		return dasmig::ng::instance().get_name(gender, countryGetNGCulture(country)).append_surname();
 	}
 
 	std::wstring coach::createRandomNick(std::wstring& name)
@@ -165,4 +163,4 @@ namespace r3d
 		}
 		return 0;
 	}
-}
+};

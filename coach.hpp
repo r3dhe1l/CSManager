@@ -1,25 +1,22 @@
 #pragma once
-#include <iostream>
-#include <vector>
-#include <map>
-#include "countryChoiceFunctions.hpp"
 
+#include "thirdParty/nameGenerator/dasmig/namegen.hpp"
+#include "roleSkillCountry.hpp"
 
 namespace r3d
 {
 	class coach
 	{
-
 	public:
 
 		coach();
 
-		coach(std::wstring name, std::wstring nickname, r3d::country::avaibleCountries nationality, std::wstring born, dasmig::ng::gender gender, std::uint8_t rating,
+		coach(std::wstring name, std::wstring nickname, country::availableCountries nationality, std::wstring born, dasmig::ng::gender gender, std::uint8_t rating,
 			std::wstring currentDate);
 
-		coach(r3d::country::avaibleCountries country, dasmig::ng::gender gender);
+		coach(country::availableCountries country, dasmig::ng::gender gender);
 
-		coach(r3d::country::avaibleCountries country, int tier, dasmig::ng::gender gender);
+		coach(country::availableCountries country, int tier, dasmig::ng::gender gender);
 
 		std::uint8_t setAge(std::wstring currentDate);
 
@@ -27,12 +24,12 @@ namespace r3d
 
 		std::uint8_t getRating();
 
-		r3d::country::avaibleCountries getNationality();
+		country::availableCountries getNationality();
 
 		void showInformation();
 
 	private:
-		std::wstring createRandomName(r3d::country::avaibleCountries& country, dasmig::ng::gender& gender);
+		std::wstring createRandomName(country::availableCountries& country, dasmig::ng::gender& gender);
 
 		std::wstring createRandomNick(std::wstring& name);
 
@@ -44,10 +41,11 @@ namespace r3d
 
 		std::wstring _name;
 		std::wstring _nickname;
-		r3d::country::avaibleCountries _nationality;
+		country::availableCountries _nationality;
 		std::wstring _born;
 		dasmig::ng::gender _gender;
 		std::uint8_t _age;
 		std::uint8_t _rating;
+		//team _team;
 	};
-}
+};

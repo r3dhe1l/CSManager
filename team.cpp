@@ -1,26 +1,23 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <algorithm>
-#include "D:/a_cursos/projetos_CPP/CSManager/thirdParty/randomLibrary/random.hpp"
-#include "player.hpp"
-#include "coach.hpp"
 #include "team.hpp"
+#include "random.hpp"
+#include "magic_enum.hpp"
 #include "countryChoiceFunctions.hpp"
+#include "coach.hpp"
+#include "player.hpp"
+
 
 namespace r3d
 {
 	team::team()
-	{
-		this->_numberPlayers = 0;
-	}
+		: _country(country::availableCountries::Brazil), _numberPlayers(0), _region(country::availableRegions::Americas)
+	{}
 
-	team::team(std::wstring name, std::wstring country, std::wstring region, std::wstring creationDate, std::vector <r3d::player> players, r3d::coach coach)
+	team::team(std::wstring name, country::availableCountries country, country::availableRegions region, std::wstring creationDate, std::vector <player> players, coach coach)
 		: _name(name), _country(country), _region(region), _creationDate(creationDate), _numberPlayers(this->_playersVector.size()), _playersVector(players), _coach(coach),
 		_rolesCTFilled(fillRolesCT()), _rolesTRFilled(fillRolesTR())
 	{}
 
-	team::team(std::vector <r3d::player> players)
+	team::team(std::vector <player> players)
 		: _name(L"Team's Name"), _playersVector(players), _numberPlayers(this->_playersVector.size()), _creationDate(createRandomFounding()), _country(playersDefineCountry()),
 		_region(countryDefineRegion()), _rolesCTFilled(fillRolesCT()), _rolesTRFilled(fillRolesTR())
 	{}
@@ -29,7 +26,7 @@ namespace r3d
 		: _name(name), _numberPlayers(this->_playersVector.size()), _creationDate(createRandomFounding()), _rolesCTFilled(fillRolesCT()), _rolesTRFilled(fillRolesTR())
 	{}
 
-	void team::addPlayerToTeam(r3d::player player)
+	void team::addPlayerToTeam(player player)
 	{
 		if (this->_numberPlayers < 4)
 		{
@@ -51,7 +48,7 @@ namespace r3d
 		}
 	}
 
-	void team::addCoachToTeam(r3d::coach coach)
+	void team::addCoachToTeam(coach coach)
 	{
 		if (this->_coach.getName() == L"")
 		{
@@ -59,7 +56,7 @@ namespace r3d
 		}
 	}
 
-	std::vector <r3d::player> team::playersDraft(std::vector <r3d::player> possiblePlayers)
+	std::vector <player> team::playersDraft(std::vector <player> possiblePlayers)
 	{
 		if (this->_numberPlayers == 0)
 		{
@@ -69,18 +66,18 @@ namespace r3d
 		int maxPlayers = 5 - (int)this->_numberPlayers;
 		for (int i = 0; i < maxPlayers; i++)
 		{
-			int index = avaiblePlayer(possiblePlayers);
+			int index = availablePlayer(possiblePlayers);
 			addPlayerToTeam(possiblePlayers.at(index));
 			possiblePlayers.erase(possiblePlayers.begin() + index);
 		}
 		return possiblePlayers;
 	}
 
-	std::vector <r3d::coach> team::coachDraft(std::vector <r3d::coach> possibleCoach)
+	std::vector <coach> team::coachDraft(std::vector <coach> possibleCoach)
 	{
 		if (this->_coach.getName() == L"")
 		{
-			int index = avaibleCoach(possibleCoach);
+			int index = availableCoach(possibleCoach);
 			addCoachToTeam(possibleCoach.at(index));
 			possibleCoach.erase(possibleCoach.begin() + index);
 		}
@@ -89,23 +86,22 @@ namespace r3d
 
 	void team::showInformation()
 	{
-		std::wcout << this->_name << L" " << this->_country << L" " << this->_region << L" " << this->_creationDate << L" " << this->_numberPlayers << std::endl;
-		for (int i = 0; i < this->_numberPlayers; i++)
-		{
-			std::wcout << this->_playersVector.at(i).getSkillLevel() << L" - " << this->_rolesCTFilled.at(i) << L" - " << this->_rolesTRFilled.at(i) <<
-				L" - " << this->_playersVector.at(i).getNationality() << std::endl;
-		}
-		if (this->_coach.getName() != L"")
-		{
-			std::wcout << L"coach: " << this->_coach.getRating() << std::endl;
-		}
+		//std::wcout << this->_name << L" " << this->_country << L" " << this->_region << L" " << this->_creationDate << L" " << this->_numberPlayers << std::endl;
+		//for (int i = 0; i < this->_numberPlayers; i++)
+		//{
+		//	std::wcout << this->_playersVector.at(i).getSkillLevel() << L" - " << this->_rolesCTFilled.at(i) << L" - " << this->_rolesTRFilled.at(i) <<
+		//		L" - " << this->_playersVector.at(i).getNationality() << std::endl;
+		//}
+		//if (this->_coach.getName() != L"")
+		//{
+		//	std::wcout << L"coach: " << this->_coach.getRating() << std::endl;
+		//}
 
 	}
 
-	std::wstring team::playersDefineCountry()
+	country::availableCountries team::playersDefineCountry()
 	{
-		std::vector <std::wstring> playersNationalityVector{ 5 };
-		int index;
+		std::vector <country::availableCountries> playersNationalityVector{ 5 };
 		std::int64_t numCountries;
 
 		for (int i = 0; i < this->_numberPlayers; i++)
@@ -113,61 +109,63 @@ namespace r3d
 			playersNationalityVector.at(i) = this->_playersVector.at(i).getNationality();
 		}
 
-		for (int i = 0; i < r3d::availableCountries.size(); i++)
+		for (int i = 0; i < magic_enum::enum_count<country::availableCountries>(); i++)
 		{
-			numCountries = std::count(playersNationalityVector.begin(), playersNationalityVector.end(), r3d::availableCountries.at(i));
-			index = i;
+			numCountries = std::count(playersNationalityVector.begin(), playersNationalityVector.end(), magic_enum::enum_value<country::availableCountries>(i));
 
 			if (numCountries > 2)
 			{
-				return r3d::availableCountries.at(index);
+				return magic_enum::enum_value<country::availableCountries>(i);
 			}
 		}
-		return r3d::availableCountries.at(0);
+		return magic_enum::enum_value<country::availableCountries>(0);
 	}
 
-	std::wstring team::countryDefineRegion()
+	country::availableRegions team::countryDefineRegion()
 	{
-		std::wstring region;
-		this->_country == r3d::availableCountries.at(0) ? region = determineInternationalTeamRegion() : region = *r3d::countryGetRegion(this->_country);
-		return region;
+		return this->_country == magic_enum::enum_value<country::availableCountries>(0) ? determineInternationalTeamRegion() : countryGetRegion(this->_country);
 	}
 
-	std::wstring team::determineInternationalTeamRegion()
+	country::availableRegions team::determineInternationalTeamRegion()
 	{
-		std::vector <std::wstring> playersRegionVector{ 5 };
+		std::vector <country::availableRegions> playersRegionVector{ this->_numberPlayers };
 
 		for (int i = 0; i < this->_numberPlayers; i++)
 		{
-			playersRegionVector.at(i) = *r3d::countryGetRegion(this->_playersVector.at(i).getNationality());
+			playersRegionVector.at(i) = countryGetRegion(this->_playersVector.at(i).getNationality());
 		}
 
 		std::vector <int> vectorNumberOfPLayersByRegion = {
-			(int)std::count(playersRegionVector.begin(), playersRegionVector.end(), L"Europe"),
-			(int)std::count(playersRegionVector.begin(), playersRegionVector.end(), L"CIS"),
-			(int)std::count(playersRegionVector.begin(), playersRegionVector.end(), L"Americas"),
-			(int)std::count(playersRegionVector.begin(), playersRegionVector.end(), L"Asia"),
-			(int)std::count(playersRegionVector.begin(), playersRegionVector.end(), L"Oceania") };
+			(int)std::count(playersRegionVector.begin(), playersRegionVector.end(), country::availableRegions::Western_Europe),
+			(int)std::count(playersRegionVector.begin(), playersRegionVector.end(), country::availableRegions::Eastern_Europe),
+			(int)std::count(playersRegionVector.begin(), playersRegionVector.end(), country::availableRegions::CIS),
+			(int)std::count(playersRegionVector.begin(), playersRegionVector.end(), country::availableRegions::Americas),
+			(int)std::count(playersRegionVector.begin(), playersRegionVector.end(), country::availableRegions::Asia),
+			(int)std::count(playersRegionVector.begin(), playersRegionVector.end(), country::availableRegions::Oceania) };
 
 		if (vectorNumberOfPLayersByRegion.at(0) > 2)
 		{
-			return L"Europe";
+			return country::availableRegions::Western_Europe;
 		}
 		else if (vectorNumberOfPLayersByRegion.at(1) > 2)
 		{
-			return L"CIS";
+			return country::availableRegions::Eastern_Europe;
 		}
 		else if (vectorNumberOfPLayersByRegion.at(2) > 2)
 		{
-			return L"Americas";
+			return country::availableRegions::CIS;
 		}
 		else if (vectorNumberOfPLayersByRegion.at(3) > 2)
 		{
-			return L"Asia";
+			return country::availableRegions::Americas;
 		}
 		else if (vectorNumberOfPLayersByRegion.at(4) > 2)
 		{
-			return L"Oceania";
+			return country::availableRegions::Asia;
+		}
+		else if (vectorNumberOfPLayersByRegion.at(5) > 2)
+		{
+			return country::availableRegions::Oceania;
 		}
 		else
 		{
@@ -177,18 +175,21 @@ namespace r3d
 
 			switch (index)
 			{
+			case 0:
+				return country::availableRegions::Western_Europe;
 			case 1:
-				return L"CIS";
+				return country::availableRegions::Eastern_Europe;
 			case 2:
-				return L"Americas";
+				return country::availableRegions::CIS;
 			case 3:
-				return L"Asia";
+				return country::availableRegions::Americas;
 			case 4:
-				return L"Oceania";
+				return country::availableRegions::Asia;
+			case 5:
+				return country::availableRegions::Oceania;
 			default:
-				break;
+				return vectorNumberOfPLayersByRegion.at(0) == 1 ? country::availableRegions::Western_Europe : country::availableRegions::Eastern_Europe;
 			}
-			return L"Europe";
 		}
 	}
 
@@ -235,9 +236,9 @@ namespace r3d
 		return dayString + L"/" + monthString + L"/" + std::to_wstring(year);
 	}
 
-	std::vector<std::wstring> team::fillRolesCT()
+	std::vector <role::rolesCT> team::fillRolesCT()
 	{
-		std::vector<std::wstring> rolesCT{ 5 };
+		std::vector<role::rolesCT> rolesCT{ this->_numberPlayers };
 
 		for (int i = 0; i < this->_numberPlayers; i++)
 		{
@@ -248,9 +249,9 @@ namespace r3d
 		return rolesCT;
 	}
 
-	std::vector<std::wstring> team::fillRolesTR()
+	std::vector <role::rolesTR> team::fillRolesTR()
 	{
-		std::vector<std::wstring> rolesTR{ 5 };
+		std::vector<role::rolesTR> rolesTR{ this->_numberPlayers };
 
 		for (int i = 0; i < this->_numberPlayers; i++)
 		{
@@ -261,7 +262,7 @@ namespace r3d
 		return rolesTR;
 	}
 
-	int team::avaiblePlayer(std::vector <r3d::player> possiblePlayers)
+	int team::availablePlayer(std::vector <player> possiblePlayers)
 	{
 		for (int i = 0; i < possiblePlayers.size(); i++)
 		{
@@ -274,7 +275,7 @@ namespace r3d
 					if (std::find(this->_rolesTRFilled.begin(), this->_rolesTRFilled.end(), possiblePlayers.at(i).getPrimaryRoleTR()) == this->_rolesTRFilled.end() ||
 						std::find(this->_rolesTRFilled.begin(), this->_rolesTRFilled.end(), possiblePlayers.at(i).getSecondaryRoleTR()) == this->_rolesTRFilled.end())
 					{
-						if (r3d::countryGetRegion(this->_playersVector.at(0).getNationality()) == r3d::countryGetRegion(possiblePlayers.at(i).getNationality()))
+						if (countryGetRegion(this->_playersVector.at(0).getNationality()) == countryGetRegion(possiblePlayers.at(i).getNationality()))
 						{
 							if (this->_playersVector.at(0).getNationality() == possiblePlayers.at(i).getNationality())
 							{
@@ -297,7 +298,7 @@ namespace r3d
 					if (std::find(this->_rolesTRFilled.begin(), this->_rolesTRFilled.end(), possiblePlayers.at(i).getPrimaryRoleTR()) == this->_rolesTRFilled.end() ||
 						std::find(this->_rolesTRFilled.begin(), this->_rolesTRFilled.end(), possiblePlayers.at(i).getSecondaryRoleTR()) == this->_rolesTRFilled.end())
 					{
-						if (r3d::countryGetRegion(this->_playersVector.at(0).getNationality()) == r3d::countryGetRegion(possiblePlayers.at(i).getNationality()))
+						if (countryGetRegion(this->_playersVector.at(0).getNationality()) == countryGetRegion(possiblePlayers.at(i).getNationality()))
 						{
 							return i;
 						}
@@ -326,14 +327,14 @@ namespace r3d
 		return effolkronium::random_thread_local::get<int>(0, (int)possiblePlayers.size() - 1);
 	}
 
-	int team::avaibleCoach(std::vector <r3d::coach> possibleCoachs)
+	int team::availableCoach(std::vector <coach> possibleCoachs)
 	{
 		for (int i = 0; i < possibleCoachs.size(); i++)
 		{
 			if ((this->_playersVector.at(0).getSkillLevel() - 10) < possibleCoachs.at(i).getRating() &&
 				(this->_playersVector.at(0).getSkillLevel() + 10) > possibleCoachs.at(i).getRating())
 			{
-				if (r3d::countryGetRegion(this->_playersVector.at(0).getNationality()) == r3d::countryGetRegion(possibleCoachs.at(i).getNationality()))
+				if (countryGetRegion(this->_playersVector.at(0).getNationality()) == countryGetRegion(possibleCoachs.at(i).getNationality()))
 				{
 					if (this->_playersVector.at(0).getNationality() == possibleCoachs.at(i).getNationality())
 					{
@@ -348,7 +349,7 @@ namespace r3d
 			if ((this->_playersVector.at(0).getSkillLevel() - 10) < possibleCoachs.at(i).getRating() &&
 				(this->_playersVector.at(0).getSkillLevel() + 10) > possibleCoachs.at(i).getRating())
 			{
-				if (r3d::countryGetRegion(this->_playersVector.at(0).getNationality()) == r3d::countryGetRegion(possibleCoachs.at(i).getNationality()))
+				if (countryGetRegion(this->_playersVector.at(0).getNationality()) == countryGetRegion(possibleCoachs.at(i).getNationality()))
 				{
 					return i;
 				}
@@ -366,4 +367,4 @@ namespace r3d
 
 		return effolkronium::random_thread_local::get<int>(0, (int)possibleCoachs.size() - 1);
 	}
-}
+};

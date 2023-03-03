@@ -27,7 +27,7 @@
     <ClInclude Include="coach.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="skills.hpp">
+    <ClInclude Include="roleSkillCountry.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
