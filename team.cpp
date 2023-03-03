@@ -28,16 +28,7 @@ namespace r3d
 
 	void team::addPlayerToTeam(player player)
 	{
-		if (this->_numberPlayers < 4)
-		{
-			this->_playersVector.push_back(player);
-			this->_numberPlayers = _playersVector.size();
-			this->_country = playersDefineCountry();
-			this->_region = countryDefineRegion();
-			this->_rolesCTFilled = fillRolesCT();
-			this->_rolesTRFilled = fillRolesTR();
-		}
-		else if (this->_numberPlayers == 4)
+		if (this->_numberPlayers < 5)
 		{
 			this->_playersVector.push_back(player);
 			this->_numberPlayers = _playersVector.size();
@@ -86,16 +77,24 @@ namespace r3d
 
 	void team::showInformation()
 	{
-		//std::wcout << this->_name << L" " << this->_country << L" " << this->_region << L" " << this->_creationDate << L" " << this->_numberPlayers << std::endl;
-		//for (int i = 0; i < this->_numberPlayers; i++)
-		//{
-		//	std::wcout << this->_playersVector.at(i).getSkillLevel() << L" - " << this->_rolesCTFilled.at(i) << L" - " << this->_rolesTRFilled.at(i) <<
-		//		L" - " << this->_playersVector.at(i).getNationality() << std::endl;
-		//}
-		//if (this->_coach.getName() != L"")
-		//{
-		//	std::wcout << L"coach: " << this->_coach.getRating() << std::endl;
-		//}
+		/*std::wstring xxx{ magic_enum::enum_name(teste::abc).begin(), magic_enum::enum_name(teste::abc).end() };*/
+		std::string country{ magic_enum::enum_name<country::availableCountries>(this->_country) };
+		std::string region{ magic_enum::enum_name<country::availableRegions>(this->_region) };
+
+		std::wcout << this->_name << L" " << country.c_str() << L" " << region.c_str() << L" " << this->_creationDate << L" " << this->_numberPlayers << std::endl;
+		for (int i = 0; i < this->_numberPlayers; i++)
+		{
+			std::string roleCT{ magic_enum::enum_name<role::rolesCT>(this->_rolesCTFilled.at(i)) };
+			std::string roleTR{ magic_enum::enum_name<role::rolesTR>(this->_rolesTRFilled.at(i)) };
+			std::string nationality{ magic_enum::enum_name<country::availableCountries>(this->_playersVector.at(i).getNationality()) };
+
+			std::wcout << this->_playersVector.at(i).getSkillLevel() << L" - " << roleCT.c_str() << L" - " << roleTR.c_str() <<
+				L" - " << nationality.c_str() << std::endl;
+		}
+		if (this->_coach.getName() != L"")
+		{
+			std::wcout << L"coach: " << this->_coach.getRating() << std::endl;
+		}
 
 	}
 

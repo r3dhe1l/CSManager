@@ -85,9 +85,14 @@ namespace r3d
 
 	void player::showInformation()
 	{
-		//std::wcout << L"Nome do Jogador é " << this->_name << L"\nNickname do jogador é " << this->_nickname << L"\nNacionalidade é " << this->_nationality <<
-		//	L"\nNasceu em " << this->_born << L"\nJoga de CT como " << this->_primaryRoleCT << L"\nJOga de TR como " << this->_primaryRoleTR << L"\nSexo " <<
-		//	this->_gender << L"\nCom skill level de " << this->_skillLevel << L"\nE tem " << this->_age << L" anos\n";
+		std::string country{ magic_enum::enum_name<country::availableCountries>(this->_nationality) };
+		std::string primaryRoleCT{ magic_enum::enum_name<role::rolesCT>(this->_primaryRoleCT) };
+		std::string primaryRoleTR{ magic_enum::enum_name<role::rolesTR>(this->_primaryRoleTR) };
+		std::string gender{ magic_enum::enum_name<dasmig::ng::gender>(this->_gender) };
+
+		std::wcout << L"Nome do Jogador é " << this->_name << L"\nNickname do jogador é " << this->_nickname << L"\nNacionalidade é " << country.c_str() <<
+			L"\nNasceu em " << this->_born << L"\nJoga de CT como " << primaryRoleCT.c_str() << L"\nJOga de TR como " << primaryRoleTR.c_str() << L"\nSexo " <<
+			gender.c_str() << L"\nCom skill level de " << this->_skillLevel << L"\nE tem " << this->_age << L" anos\n";
 	}
 
 	std::wstring player::createRandomName(country::availableCountries& country, dasmig::ng::gender& gender)

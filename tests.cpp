@@ -5,44 +5,27 @@
 #include "player.hpp"
 #include "coach.hpp"
 #include "team.hpp"
+//arrumar draft para uma função
+//arrumar saida dos nomes dos paises
+//adicionar team como atributo de player e coach
+//fazer calculo dos atributos
+//criar enum de traits
+//arrumar espaços fora da visão
+//arrumar algoritmo do draft
+//aprender usar date.h
+//criar time para free agents
 
 int main()
 {
-	enum class xxx {
-		brazil,
-		argentina,
-		chile,
-		uruguai
-	};
+	dasmig::ng::instance().load("thirdParty/nameGenerator/resources");
+	dasmig::nng::instance().load("thirdParty/nicknameGenerator/resources");
 
-	std::vector <xxx> test{ xxx::brazil, xxx::brazil, xxx::argentina, xxx::chile, xxx::uruguai };
+	std::vector <r3d::team> test = r3d::createTeamsVector(100);
 
-	//enum teste {
-	//	abc,
-	//	def,
-	//	ghi,
-	//	jkl,
-	//	mno
-	//};
-
-	//std::wstring xxx{ magic_enum::enum_name(teste::def).begin(), magic_enum::enum_name(teste::def).end() };
-	//std::string teste2{ "def" };
-	//auto xyz = magic_enum::enum_cast<teste>("jkl");
-	//std::string teste4{ magic_enum::enum_name(xyz.value()) };
-	//auto kkk = magic_enum::enum_name(teste::def);
-	//std::cout << teste::abc << "\n";
-
-
-
-	//dasmig::ng::instance().load("D:/a_cursos/projetos_CPP/CSManager/thirdParty/nameGenerator/resources");
-	//dasmig::nng::instance().load("D:/a_cursos/projetos_CPP/CSManager/thirdParty/nicknameGenerator/resources");
-
-	//std::vector <team> test = createTeamsVector(100);
-
-	//for (int i = 0; i < 100; i++)
-	//{
-	//	test.at(i).showInformation();
-	//	std::wcout << std::endl;
-	//}
+	for (int i = 0; i < 100; i++)
+	{
+		test.at(i).showInformation();
+		std::wcout << std::endl;
+	}
 	return 0; //Primeiro teste 5,847s 24mb ram 8% cpu
 }

@@ -33,7 +33,7 @@ namespace r3d
 
 	std::vector <int> playersCountriesSortBySkillLevel(const int numPlayers)
 	{
-		std::vector <int> sortedPlayerCountriesVector{ numPlayers * 2 };
+		std::vector <int> sortedPlayerCountriesVector(numPlayers * 2);
 
 		int beginIndex = 0;
 		int endIndex = (int)std::round(numPlayers * 0.00184); //tier 1 = define 2 highest overall for 1080 players or 180 teams
@@ -119,7 +119,7 @@ namespace r3d
 
 	std::vector <player> createPlayersVector(const std::size_t numTeams)
 	{
-		std::vector <player> playersVector{ numTeams * 6 };
+		std::vector <player> playersVector( numTeams * 6 );
 		std::vector <int> countriesAndTierSkill = playersCountriesSortBySkillLevel((int)numTeams * 6);
 
 		for (int i = 0; i < playersVector.size(); i++)
@@ -157,7 +157,7 @@ namespace r3d
 
 	std::vector <int> coachsCountriesSortBySkillLevel(const int numCoachs)
 	{
-		std::vector <int> sortedCoachCountriesVector{ numCoachs * 2 };
+		std::vector <int> sortedCoachCountriesVector( numCoachs * 2 );
 
 		int beginIndex = 0;
 		int endIndex = (int)std::round(numCoachs * 0.047); //tier 1
@@ -175,7 +175,7 @@ namespace r3d
 			country::availableCountries::Denmark, country::availableCountries::Finland, country::availableCountries::France, country::availableCountries::Germany, country::availableCountries::Mongolia,
 			country::availableCountries::Poland, country::availableCountries::Portugal, country::availableCountries::Russia, country::availableCountries::Sweden, country::availableCountries::Turkey,
 			country::availableCountries::Ukraine, country::availableCountries::United_Kingdom, country::availableCountries::United_States, country::availableCountries::Belgium,
-			country::availableCountries::Bosnia, country::availableCountries::Bulgaria, country::availableCountries::Canada, country::availableCountries::Chile, country::availableCountries::Estonia, 
+			country::availableCountries::Bosnia, country::availableCountries::Bulgaria, country::availableCountries::Canada, country::availableCountries::Chile, country::availableCountries::Estonia,
 			country::availableCountries::Hungary, country::availableCountries::Israel, country::availableCountries::Kazakhstan, country::availableCountries::Kosovo, country::availableCountries::Latvia,
 			country::availableCountries::Montenegro, country::availableCountries::Netherlands, country::availableCountries::Norway, country::availableCountries::Romania, country::availableCountries::Serbia,
 			country::availableCountries::Slovakia, country::availableCountries::South_Africa, country::availableCountries::Spain, country::availableCountries::Switzerland,

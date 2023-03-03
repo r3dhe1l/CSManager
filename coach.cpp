@@ -66,8 +66,11 @@ namespace r3d
 
 	void coach::showInformation()
 	{
-		//std::wcout << L"Nome do treinador é " << this->_name << L"\nNickname do treinador é " << this->_nickname << L"\nNacionalidade é " << this->_nationality <<
-			//L"\nNasceu em " << this->_born << L"\nSexo " << this->_gender << L"\nCom rating de " << this->_rating << L"\nE tem " << this->_age << L" anos\n";
+		std::string country{ magic_enum::enum_name<country::availableCountries>(this->_nationality) };
+		std::string gender{ magic_enum::enum_name<dasmig::ng::gender>(this->_gender) };
+
+		std::wcout << L"Nome do treinador é " << this->_name << L"\nNickname do treinador é " << this->_nickname << L"\nNacionalidade é " << country.c_str() <<
+			L"\nNasceu em " << this->_born << L"\nSexo " << gender.c_str() << L"\nCom rating de " << this->_rating << L"\nE tem " << this->_age << L" anos\n";
 	}
 
 	std::wstring coach::createRandomName(country::availableCountries& country, dasmig::ng::gender& gender)
